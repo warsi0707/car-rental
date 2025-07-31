@@ -5,7 +5,12 @@ import bcrypt  from 'bcrypt'
 
 export async function POST(req) {
     const {name, email, password,adminCode} = await req.json()
-    // try{
+    try{
+        if(!name || !email || !password){
+            return NextResponse.json({
+                error: "All input required"
+            }, {status: 404})
+        }
         const existingUser = await DB.user.findFirst({
             where: {
                 email: email
@@ -13,7 +18,7 @@ export async function POST(req) {
         })
         if(existingUser){
             return NextResponse.json({
-                message: "User already exist with this email"
+                error: "User already exist with this email"
             },{
                 status: 404
             })
@@ -34,11 +39,11 @@ export async function POST(req) {
                 user: user
             })
         
-    // }catch(error){
-    //     return NextResponse.json({
-    //         error: error
-    //     })
-    // }
+    }catch(error){
+        return NextResponse.json({
+            error: error
+        })
+    }
     
 }
 export async function GET() {

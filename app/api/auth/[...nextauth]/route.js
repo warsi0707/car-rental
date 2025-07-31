@@ -13,6 +13,9 @@ const AuthOption = NextAuth({
             },
             async authorize(credentials, req) {
                 try{
+                    if(!credentials.email || !credentials.password){
+                        throw new error("All input required")
+                    }
                     const user = await DB.user.findFirst({
                         where: {
                             email: credentials.email
@@ -36,6 +39,9 @@ const AuthOption = NextAuth({
         })
     ],
     secret: process.env.AUTH_SECRET,
+    pages : {
+        signIn: '/signin'
+    },
     session: {
         strategy: 'jwt'
     },

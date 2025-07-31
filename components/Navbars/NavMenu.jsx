@@ -1,9 +1,15 @@
+'use client'
 import Link from 'next/link';
 import React, { memo } from 'react'
 import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
+import LogoutBtn from './LogoutBtn';
+import { getServerSession } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
 function NavMenu({close}) {
+  const session = useSession()
+  console.log(session)
   return (
     <motion.div 
  
@@ -14,9 +20,16 @@ function NavMenu({close}) {
           <h1>Rent your car</h1>
           <Link href={"/"}>Home</Link>
           <Link href={"/"}>Cars</Link>
-          <Link href={"/signin"}>Signin</Link>
+          {session.status === 'authenticated' &&  <LogoutBtn/> }
+          {session.status === 'unauthenticated' && 
+          <>
+           <Link href={"/signin"}>Signin</Link>
           <Link href={"/signup"}>Signup</Link>
-          <Link href={"/"}>Logout</Link>
+          </>
+          }
+          
+         
+       
         </div>
       </div>
     </motion.div>

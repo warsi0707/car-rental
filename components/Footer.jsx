@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="bg-gray-200  w-screen flex text-black ">
+    <footer className="bg-gray-200  h-96 flex justify-end text-black ">
       <div className="w-1/2 flex flex-col sm:flex-row gap-5 justify-between mx-auto py-20">
         <div>
           <h1 className="text-3xl ">Rent a car</h1>

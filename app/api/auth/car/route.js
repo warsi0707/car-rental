@@ -2,8 +2,8 @@ import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function POST(req) { 
-    const {name, brand, modelYear, price, image} = await req.json()
-    try{
+    const {name, brand, modelYear, price, image,content} = await req.json()
+    // try{
         const car = await DB.car.create({
             data: {
                 name,
@@ -11,6 +11,7 @@ export async function POST(req) {
                 modelYear,
                 pricePerDay:price,
                 image,
+                content
             }
         })
         if(car){
@@ -26,11 +27,11 @@ export async function POST(req) {
                 status: 400
             })
         }
-    }catch(error){
-        return NextResponse.json({
-            error: error
-        })
-    }
+    // }catch(error){
+    //     return NextResponse.json({
+    //         error: error
+    //     })
+    // }
     
 }
 export async function  GET(req) {

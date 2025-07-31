@@ -3,25 +3,17 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import NavMenu from "./NavMenu";
-import Sginup from "../sign/Signup";
-import Signin from "../sign/Signin";
 import * as motion from "motion/react-client";
 import NavLink from "./NavLink";
-import NavButton from "./NavButton";
+import LogoutBtn from "./LogoutBtn";
+import { useSession } from "next-auth/react";
 
 function Navbars() {
-  const [openMenu, setOpenMenu] = useState(false);
-  const [signin, setSignin] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+  const session = useSession()
 
+  const [openMenu, setOpenMenu] = useState(false);
   const ToggleMenu = () => {
     setOpenMenu(!openMenu);
-  };
-  const ToggleSignUp = () => {
-    setSignUp(!signUp);
-  };
-  const ToggleSignIN = () => {
-    setSignin(!signin);
   };
   return (
     <>
@@ -38,8 +30,10 @@ function Navbars() {
           <NavLink link={"/"} title={"Home"} />
           <NavLink link={"#cars"} title={"Cars"} />
           <NavLink link={"#service"} title={"Services"} />
-          <NavButton onclick={ToggleSignIN} title={"Signin"} />
-          <NavButton onclick={ToggleSignUp} title={"Signup"} />
+          {session.status === 'authenticated' &&  <LogoutBtn/>}
+          {session.status === 'unauthenticated' && <NavLink link={"/signin"} title={"Signin"} />}
+          
+         
         </motion.div>
 
         <motion.div
@@ -61,12 +55,12 @@ function Navbars() {
       <div
 
       className="fixed">{openMenu && <NavMenu close={ToggleMenu} />}</div>
-      <div className="sticky top-0">
+      {/* <div className="sticky top-0">
         {signUp && <Sginup close={ToggleSignUp} />}
       </div>
       <div className="sticky top-0">
         {signin && <Signin close={ToggleSignIN} />}
-      </div>
+      </div> */}
     </>
   );
 }
