@@ -2,14 +2,41 @@
 import { memo, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import BookingInput from "./BookingInput";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
-function RideBookingCard({close, onclick ,id, pricePerDay}) {
+function RideBookingCard({close, id, pricePerDay}) {
+  const session = useSession()
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [totalPrice, setTotalPrice] = useState(0)
 
-  const Booking =async()=>{
-    
+
+  const Booking =async(e)=>{  
+    e.preventDefault()
+    const userId = session.data.user.id
+    if(session.status === 'unauthenticated'){
+      toast.error("Login required")
+    }
+    try{
+      const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({startDate, endDate, userId})
+      })
+      const result = await res.json()
+      console.log(result)
+      if(res.ok){
+        toast.success(result.message)
+        close()
+      }else{
+        toast.error(result.message)
+      }
+    }catch(error){
+      toast.error(error)
+    }
   }
   useEffect(()=>{
     if(startDate && endDate){
@@ -21,7 +48,6 @@ function RideBookingCard({close, onclick ,id, pricePerDay}) {
         }else{
           setTotalPrice(0)
         }
-        console.log(totalDay)
     }
   },[startDate, endDate, totalPrice])
   return (
@@ -39,7 +65,7 @@ function RideBookingCard({close, onclick ,id, pricePerDay}) {
           <div>
             <h1 className='text-xl'>Total Fare: {totalPrice}</h1>
           </div>
-          <button onClick={onclick} className='bg-indigo-600 w-full p-1 sm:p-3 text-2xl rounded-full hover:bg-indigo-500 cursor-pointer transition-all duration-300'>Take A Ride</button>
+          <button onClick={Booking} className='bg-indigo-600 w-full p-1 sm:p-3 text-2xl rounded-full hover:bg-indigo-500 cursor-pointer transition-all duration-300'>Take A Ride</button>
         </div>
     </div>
   )

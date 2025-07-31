@@ -30,7 +30,7 @@ function Navbars() {
           <NavLink link={"/"} title={"Home"} />
           <NavLink link={"#cars"} title={"Cars"} />
           <NavLink link={"#service"} title={"Services"} />
-          {session.status === 'authenticated' &&  <LogoutBtn/>}
+          {session.status === 'authenticated' && <> <LogoutBtn/> <NavLink link={"/bookings"} title={"Bookings"} /></>}
           {session.status === 'unauthenticated' && <NavLink link={"/signin"} title={"Signin"} />}
           
          

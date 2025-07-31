@@ -21,7 +21,6 @@ const AuthOption = NextAuth({
                             email: credentials.email
                         }
                     })
-                         console.log(user)
                     if(!user){
                         return null
                     }
@@ -47,8 +46,6 @@ const AuthOption = NextAuth({
     },
     callbacks : {
         async jwt({token, user}){
-            console.log("token", token)
-            console.log("user", user)
             if(user){
                 token.id = user.id,
                 token.name = user.name
@@ -58,7 +55,6 @@ const AuthOption = NextAuth({
             return token
         },
         async session({session, token}){
-            console.log("session", session)
             if(token){
                  session.user.id = token.id,
                 session.user.email =token.email,
