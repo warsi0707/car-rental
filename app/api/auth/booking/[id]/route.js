@@ -112,11 +112,12 @@ export async function PUT(req, { params }) {
 //remove your bookings
 export async function DELETE(req, {params}) {
     const {id} = await params;
+    const {userId} = await req.json()
     try{
         const RemoveBooking = await DB.booking.delete({
             where: {
                 id: parseInt(id),
-                userId: parseInt(1)
+                userId: parseInt(userId)
             }
         })
         if(RemoveBooking){

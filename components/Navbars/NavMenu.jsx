@@ -20,7 +20,7 @@ function NavMenu({close}) {
           <h1>Rent your car</h1>
           <Link href={"/"}>Home</Link>
           <Link href={"/"}>Cars</Link>
-          {session.status === 'authenticated' &&  <LogoutBtn/> }
+          {session.status === 'authenticated' &&  <><Link href={"/bookings"}>Bookings</Link> <LogoutBtn/></> }
           {session.status === 'unauthenticated' && 
           <>
            <Link href={"/signin"}>Signin</Link>

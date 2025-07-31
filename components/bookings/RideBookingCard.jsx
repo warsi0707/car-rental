@@ -4,13 +4,14 @@ import { RxCross2 } from "react-icons/rx";
 import BookingInput from "./BookingInput";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function RideBookingCard({close, id, pricePerDay}) {
   const session = useSession()
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [totalPrice, setTotalPrice] = useState(0)
-
+  const router = useRouter()
 
   const Booking =async(e)=>{  
     e.preventDefault()
@@ -30,6 +31,7 @@ function RideBookingCard({close, id, pricePerDay}) {
       console.log(result)
       if(res.ok){
         toast.success(result.message)
+        router.push("/bookings")
         close()
       }else{
         toast.error(result.message)
