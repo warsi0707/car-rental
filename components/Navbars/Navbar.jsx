@@ -9,7 +9,7 @@ import LogoutBtn from "./LogoutBtn";
 import { useSession } from "next-auth/react";
 
 function Navbars() {
-  const session = useSession()
+  const session = useSession();
 
   const [openMenu, setOpenMenu] = useState(false);
   const ToggleMenu = () => {
@@ -30,10 +30,15 @@ function Navbars() {
           <NavLink link={"/"} title={"Home"} />
           <NavLink link={"#cars"} title={"Cars"} />
           <NavLink link={"#service"} title={"Services"} />
-          {session.status === 'authenticated' && <> <LogoutBtn/> <NavLink link={"/bookings"} title={"Bookings"} /></>}
-          {session.status === 'unauthenticated' && <NavLink link={"/signin"} title={"Signin"} />}
-          
-         
+          {session.status === "authenticated" && (
+            <>
+              {" "}
+              <LogoutBtn /> <NavLink link={"/bookings"} title={"Bookings"} />
+            </>
+          )}
+          {session.status === "unauthenticated" && (
+            <NavLink link={"/signin"} title={"Signin"} />
+          )}
         </motion.div>
 
         <motion.div
@@ -52,15 +57,7 @@ function Navbars() {
           )}
         </motion.div>
       </div>
-      <div
-
-      className="fixed">{openMenu && <NavMenu close={ToggleMenu} />}</div>
-      {/* <div className="sticky top-0">
-        {signUp && <Sginup close={ToggleSignUp} />}
-      </div>
-      <div className="sticky top-0">
-        {signin && <Signin close={ToggleSignIN} />}
-      </div> */}
+      <div className="fixed">{openMenu && <NavMenu close={ToggleMenu} />}</div>
     </>
   );
 }

@@ -1,21 +1,21 @@
 "use client";
-import React, { memo, useRef } from "react";
+import React, { memo, useRef, useState } from "react";
 import SignFormInput from "./SignFormInput";
 import SignButton from "./SignButton";
 import Link from "next/link";
-import { RxCross2 } from "react-icons/rx";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
+import LoadingPage from "../LoadingPage";
 
-function Signin({ close }) {
+function Signin() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const [loading, setLoading] = useState(false);
 
   const HandleSignin = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    console.log(email, password);
     try {
       if (!email || !password) {
         toast.error("All inout required");
@@ -26,7 +26,9 @@ function Signin({ close }) {
         redirect: true,
         callbackUrl: "/",
       });
+      setLoading(true);
       if (res.ok == true) {
+        setLoading(false);
         toast.success("Signin success");
       } else {
         toast.error("Signin failed");
@@ -72,14 +74,9 @@ function Signin({ close }) {
             src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
           />
-          {/* <button
-            onClick={close}
-            className="absolute right-10 top-5 text-3xl text-white cursor-pointer p-2 rounded-full bg-black "
-          >
-            <RxCross2 />
-          </button> */}
         </div>
       </div>
+      {loading && <LoadingPage />}
     </div>
   );
 }

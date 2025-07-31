@@ -1,37 +1,43 @@
-'use client'
+"use client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { memo, useState } from "react";
 import toast from "react-hot-toast";
 import { MdCurrencyRupee } from "react-icons/md";
+import LoadingPage from "../LoadingPage";
 
-function BookedCard({ name, brand, price, start, end, total ,id}) {
-    const session = useSession()
-    const router = useRouter()
-    const CancelRide =async(id)=>{
-        try{
-            const userId = session.data.user.id
-            const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`,{
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({userId})
-            })
-            const result = await res.json()
-            console.log(result)
-            if(res.ok){
-                toast.success(result.message)
-                router.push("/")
-            }else{
-                toast.error(result.error)
-            }
-        }catch(error){
-            toast.error(error)
-        }
+function BookedCard({ name, brand, price, start, end, total, id }) {
+  const session = useSession();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const CancelRide = async (id) => {
+    try {
+      const userId = session.data.user.id;
+      const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+      const result = await res.json();
+      setLoading(true);
+      if (res.ok) {
+        setLoading(false);
+        toast.success(result.message);
+        router.push("/");
+      } else {
+        setLoading(false);
+        toast.error(result.error);
+      }
+    } catch (error) {
+      toast.error(error);
     }
+  };
   return (
     <div className="w-96 py-5 flex flex-col gap-5 rounded-xl p-3 bg-white text-black">
+      {loading && <LoadingPage/>}
       <div className="flex justify-between">
         <div>
           <h1 className="text-2xl">{name}</h1>
@@ -41,7 +47,10 @@ function BookedCard({ name, brand, price, start, end, total ,id}) {
           </div>
         </div>
         <div>
-          <button onClick={()=> CancelRide(id)} className="cursor-pointer hover:underline hover:text-red-700">
+          <button
+            onClick={() => CancelRide(id)}
+            className="cursor-pointer hover:underline hover:text-red-700"
+          >
             Cancel ride
           </button>
         </div>
@@ -73,4 +82,4 @@ function BookedCard({ name, brand, price, start, end, total ,id}) {
   );
 }
 
-export default BookedCard;
+export default memo(BookedCard);

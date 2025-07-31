@@ -17,7 +17,6 @@ export async function POST(req, { params }) {
         const start = new Date(startDate)
         const last = new Date(endDate)
         const totalDay = (last - start) / (1000 * 60 * 60 * 24)
-        console.log(totalDay)
         const car = await DB.car.findUnique({
             where: {
                 id: parseInt(id)

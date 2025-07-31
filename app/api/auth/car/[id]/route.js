@@ -53,7 +53,7 @@ export async function DELETE(req, {params}) {
     try{
         const car = await DB.car.delete({
             where: {
-                id: id
+                id: parseInt(id)
             }
         })
         return NextResponse.json({

@@ -2,7 +2,10 @@ import React from "react";
 
 function Services() {
   return (
-    <div className="h-screen w-screen bg-white flex flex-col sm:flex-row " id="service">
+    <div
+      className="h-screen w-screen bg-white flex flex-col sm:flex-row "
+      id="service"
+    >
       <div className=" h-screen w-full sm:w-1/2  flex flex-col justify-center items-start sm:pb-10 px-10 sm:px-20 gap-4 text-black">
         <h1 className="bg-black px-5 sm:px-10 sm:py-1 rounded-full text-white">
           OUR SERVICES
