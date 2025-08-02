@@ -17,15 +17,10 @@ function Navbars() {
   };
   return (
     <>
-      <div className="flex justify-end ">
+      <div className="flex justify-end  ">
         <motion.div
-          initial={{ y: 0 }}
-          whileHover={{ y: 1, scale: 1.4 }}
-          transition={{
-            duration: 0.1,
-          }}
-          translate={{}}
-          className="bg-black backdrop-blur-3xl   p-3 text-white min-w-96 mx-auto  rounded-full  justify-between px-3 hidden sm:flex mt-5"
+        
+          className="bg-black backdrop-blur-3xl fixed top-0 right-0 left-0  p-3 text-white w-96 mx-auto  rounded-full  justify-between px-3 hidden sm:flex mt-5"
         >
           <NavLink link={"/"} title={"Home"} />
           <NavLink link={"#cars"} title={"Cars"} />
@@ -42,7 +37,9 @@ function Navbars() {
         </motion.div>
 
         <motion.div
-          whileHover={{ scale: 1.5 }}
+          whileHover={{ scale: 1.2 }}
+          transition={{duration:0.2}}
+          whileTap={{scale:0.8}}
           className="fixed top-4 right-5 py-3 mt-1  text-xl bg-black px-4 rounded-full "
         >
           {openMenu && (
@@ -57,7 +54,8 @@ function Navbars() {
           )}
         </motion.div>
       </div>
-      <div className="fixed">{openMenu && <NavMenu close={ToggleMenu} />}</div>
+      <div 
+      className="fixed">{openMenu && <NavMenu close={ToggleMenu} />}</div>
     </>
   );
 }

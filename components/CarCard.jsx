@@ -6,9 +6,10 @@ import { LiaRupeeSignSolid } from "react-icons/lia";
 function CarCard({ id, name, content, price,image }) {
   return (
     <motion.div
-      whileHover={{ scale: 0.9 }}
+    initial={{ opacity: 0, scale: 0.5, y: 100, top: 0}}
+      whileHover={{ scale: 0.9 ,top: 100}}
       whileTap={{ scale: 0.8 }}
-      initial={{ opacity: 0, scale: 0.5, y: 100 }}
+      
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       animate={{ opacity: 1, scale: 1 }}
