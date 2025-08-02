@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 export default  function Bookings() {
   const [data, setData] = useState([])
   const session = useSession()
-  console.log(session)
   const GetBookings =async()=>{
   
     try{
@@ -19,7 +18,6 @@ export default  function Bookings() {
         }
       })
       const result = await res.json()
-      console.log(result)
       if(res.ok){
         setData(result.bookings)
       }

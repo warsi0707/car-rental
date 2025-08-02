@@ -8,7 +8,6 @@ export async function middleware(request) {
 
   const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
   if(!token){
-    console.log("No token found");
   }
   const publicRoutes = ['/signin', '/signup'];
   const privateRoutes = ['/bookings'];

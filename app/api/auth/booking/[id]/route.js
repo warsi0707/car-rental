@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 //book a car
 export async function POST(req, { params }) {
     const { id } = await params;
-    console.log("id", id)
     const { startDate, endDate, userId } = await req.json()
     try {
         if (!startDate || !endDate) {
@@ -23,7 +22,6 @@ export async function POST(req, { params }) {
                 id: parseInt(id)
             }
         })
-        console.log("car", car)
         const totalPrice = car.pricePerDay * totalDay
         if (car) {
             const booking = await DB.booking.create({

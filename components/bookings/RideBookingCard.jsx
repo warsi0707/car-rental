@@ -13,7 +13,6 @@ function RideBookingCard({ close, id, pricePerDay }) {
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const router = useRouter();
-  console.log("session",session)
  
 
 
@@ -25,7 +24,6 @@ function RideBookingCard({ close, id, pricePerDay }) {
       return ;
     }
     const userid = parseInt(session.data.user.id);
-    console.log(userid)
     const userId = parseInt(userid)
     try {
       const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`, {

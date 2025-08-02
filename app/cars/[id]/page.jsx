@@ -18,7 +18,6 @@ function page() {
         method: "GET",
       });
       const result = await res.json();
-      console.log(res)
       setLoading(true);
       if(res.ok) {
         setLoading(false);
