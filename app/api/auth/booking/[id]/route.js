@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 //book a car
 export async function POST(req, { params }) {
     const { id } = await params;
+    console.log("id", id)
     const { startDate, endDate, userId } = await req.json()
     try {
         if (!startDate || !endDate) {
@@ -22,12 +23,13 @@ export async function POST(req, { params }) {
                 id: parseInt(id)
             }
         })
+        console.log("car", car)
         const totalPrice = car.pricePerDay * totalDay
         if (car) {
             const booking = await DB.booking.create({
                 data: {
                     userId: parseInt(userId),
-                    carId: parseInt(1),
+                    carId: parseInt(id),
                     startDate: start,
                     endDate: last,
                     totalCost: totalPrice
@@ -43,9 +45,6 @@ export async function POST(req, { params }) {
                 error: "Booking failed"
             })
         }
-
-
-
     } catch (error) {
         return NextResponse.json({
             error: error

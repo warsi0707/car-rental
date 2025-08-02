@@ -9,6 +9,7 @@ import SignButton from "./SignButton";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import LoadingPage from "../LoadingPage";
+import { signIn } from "next-auth/react";
 
 function Signup() {
   const nameRef = useRef("");
@@ -22,6 +23,8 @@ function Signup() {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    
+    
 
     try {
       const res = await fetch(`http://localhost:3000/api/signup`, {
@@ -71,7 +74,7 @@ function Signup() {
           />
           <SignButton onclick={SignUp} title={"Signup"} />
           <div className="flex gap-5 w-80">
-            <SignOptionButton title={"Google"} icon={<FcGoogle />} />
+            <SignOptionButton onclick={()=> signIn('google')} title={"Google"} icon={<FcGoogle />} />
             <SignOptionButton title={"Github"} icon={<FaGithub />} />
           </div>
           <div className="flex text-black w-96 text-sm justify-between mt-20">

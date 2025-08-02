@@ -1,9 +1,16 @@
 import { DB } from "@/lib/PrismaClientProvider";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export  async function GET(req) {
+       const header = await headers()
+       const userId = header.get('userId')
+       console.log(userId)
     try{
         const bookings =await DB.booking.findMany({
+            where: {
+                userId: parseInt(userId)
+            },
             include: {
                 user: {
                     select: {

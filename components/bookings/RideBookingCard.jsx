@@ -13,13 +13,20 @@ function RideBookingCard({ close, id, pricePerDay }) {
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const router = useRouter();
+  console.log("session",session)
+ 
+
 
   const Booking = async (e) => {
     e.preventDefault();
-    const userId = session.data.user.id;
+   
+    
     if (session.status === "unauthenticated") {
-      toast.error("Login required");
+      return ;
     }
+    const userid = parseInt(session.data.user.id);
+    console.log(userid)
+    const userId = parseInt(userid)
     try {
       const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`, {
         method: "POST",
