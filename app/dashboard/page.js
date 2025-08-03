@@ -1,7 +1,7 @@
-import Cars from '@/components/Cars'
-import StarterPage from '@/components/StarterPage'
-import React from 'react'
-import Services from '@/components/Services'
+import Cars from "@/components/Cars"
+import Services from "@/components/Services"
+import StarterPage from "@/components/StarterPage"
+
 
 function Dashboard() {
 

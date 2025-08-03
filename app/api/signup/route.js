@@ -5,7 +5,7 @@ import bcrypt  from 'bcrypt'
 
 export async function POST(req) {
     const {name, email, password,adminCode} = await req.json()
-    try{
+    // try{
         if(!name || !email || !password){
             return NextResponse.json({
                 error: "All input required"
@@ -39,11 +39,11 @@ export async function POST(req) {
                 user: user
             })
         
-    }catch(error){
-        return NextResponse.json({
-            error: error
-        })
-    }
+    // }catch(error){
+    //     return NextResponse.json({
+    //         error: error
+    //     })
+    // }
     
 }
 export async function GET() {
