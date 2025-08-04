@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import NavMenu from "./navbars/NavMenu";
 import * as motion from "motion/react-client";
+import { useSession } from "next-auth/react";
 import NavLink from "./navbars/NavLink";
 import LogoutBtn from "./navbars/LogoutBtn";
-import { useSession } from "next-auth/react";
+import NavMenu from "./navbars/NavMenu";
 
 export default  function HomeNavbar() {
   const session = useSession();
