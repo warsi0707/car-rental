@@ -5,8 +5,6 @@ import GoogleProvider from "next-auth/providers/google";
 import db from "@/lib/PrismaClientProvider";
 
 
-
-
 const AuthOption = NextAuth({
     providers: [
         CredentialsProvider({
