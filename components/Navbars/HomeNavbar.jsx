@@ -8,7 +8,7 @@ import NavLink from "./NavLink";
 import LogoutBtn from "./LogoutBtn";
 import { useSession } from "next-auth/react";
 
-function Navbar() {
+export default  function HomeNavbar() {
   const session = useSession();
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -60,4 +60,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+

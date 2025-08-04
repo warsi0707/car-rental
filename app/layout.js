@@ -3,7 +3,8 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
 import ToasterClient from "@/lib/ToasterClientProvider";
-import Navbar from "@/components/navbars/Navbar";
+import HomeNavbar from "@/components/navbars/HomeNavbar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,7 @@ export default function RootLayout({ children }) {
         <div className=" bg-slate-950">
           <div className=" bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]">
             <AuthProvider>
-              <Navbar />
+              <HomeNavbar />
              <ToasterClient/>
               {children}
               <Footer />
