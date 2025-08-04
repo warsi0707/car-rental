@@ -14,7 +14,7 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
   const CancelRide = async (id) => {
     try {
       const userId = session.data.user.id;
-      const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`, {
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/booking/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -35,9 +35,11 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
       toast.error(error);
     }
   };
+  if(loading){
+    return <LoadingPage/>
+  }
   return (
     <div className="w-96 py-5 flex flex-col gap-5 rounded-xl p-3 bg-white text-black">
-      {loading && <LoadingPage/>}
       <div className="flex justify-between">
         <div>
           <h1 className="text-2xl">{name}</h1>

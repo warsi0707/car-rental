@@ -37,6 +37,9 @@ function Signin() {
       toast.error(error);
     }
   };
+  if(loading){
+    return <LoadingPage/>
+  }
   return (
     <div className="h-screen w-screen px-10 my-10">
       <div className="bg-indigo-400 flex flex-col-reverse sm:flex-row w-full h-screen sm:pl-10 rounded-2xl">

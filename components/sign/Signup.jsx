@@ -23,11 +23,9 @@ function Signup() {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    
-    
 
     try {
-      const res = await fetch(`http://localhost:3000/api/signup`, {
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,9 +46,11 @@ function Signup() {
       toast.error(error);
     }
   };
+  if(loading){
+    return (<LoadingPage/>)
+  }
   return (
     <div className="h-screen w-screen px-10 my-10">
-      {loading && <LoadingPage />}
       <div className="bg-indigo-400 flex flex-col-reverse sm:flex-row w-full h-screen sm:pl-10 rounded-2xl">
         <div className=" h-full w-full flex flex-col gap-3  justify-center items-center pb-20">
           <h1 className="text-2xl text-black pb-5">Create an account</h1>
@@ -74,7 +74,11 @@ function Signup() {
           />
           <SignButton onclick={SignUp} title={"Signup"} />
           <div className="flex gap-5 w-80">
-            <SignOptionButton onclick={()=> signIn('google')} title={"Google"} icon={<FcGoogle />} />
+            <SignOptionButton
+              onclick={() => signIn("google")}
+              title={"Google"}
+              icon={<FcGoogle />}
+            />
             <SignOptionButton title={"Github"} icon={<FaGithub />} />
           </div>
           <div className="flex text-black w-96 text-sm justify-between mt-20">

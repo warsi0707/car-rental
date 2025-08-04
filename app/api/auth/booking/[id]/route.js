@@ -1,6 +1,4 @@
-//Bookings
-
-import { DB } from "@/lib/PrismaClientProvider";
+import db from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 
@@ -17,14 +15,14 @@ export async function POST(req, { params }) {
         const start = new Date(startDate)
         const last = new Date(endDate)
         const totalDay = (last - start) / (1000 * 60 * 60 * 24)
-        const car = await DB.car.findUnique({
+        const car = await db.car.findUnique({
             where: {
                 id: parseInt(id)
             }
         })
         const totalPrice = car.pricePerDay * totalDay
         if (car) {
-            const booking = await DB.booking.create({
+            const booking = await prisma.booking.create({
                 data: {
                     userId: parseInt(userId),
                     carId: parseInt(id),

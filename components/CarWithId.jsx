@@ -1,38 +1,45 @@
 "use client";
-import RideBookingCard from "@/components/bookings/RideBookingCard";
-import LoadingPage from "@/components/LoadingPage";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import RideBookingCard from "./bookings/RideBookingCard";
 import { LiaRupeeSignSolid } from "react-icons/lia";
+import LoadingPage from "./LoadingPage";
 
-function page() {
+function CarWithId() {
   const { id } = useParams();
+  console.log("id", id);
   const [openCard, setOpenCard] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const Car = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/car/${id}`, {
-        method: "GET",
-      });
+      const res = await fetch(`/api/car/${id}`);
+      console.log(res);
       const result = await res.json();
       setLoading(true);
-      if(res.ok) {
+      if (res.ok) {
         setLoading(false);
         setData(result.car);
       }
     } catch (error) {
-      toast.error(error);
+      console.log(error);
     }
   };
+
   useEffect(() => {
-    Car();
-  }, []);
+    if (id) {
+      Car();
+    } else {
+      return;
+    }
+  }, [id]);
+
+  if (loading) {
+    return <LoadingPage />;
+  }
   return (
     <div className="min-h-screen w-screen  py-10">
-      {loading && <LoadingPage />}
       <div className="h-screen w-full  p-10 ">
         <img
           className="h-96 w-full sm:w-1/2 mx-auto rounded-2xl"
@@ -74,4 +81,4 @@ function page() {
   );
 }
 
-export default page;
+export default CarWithId;

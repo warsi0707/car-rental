@@ -1,10 +1,10 @@
-import { DB } from "@/lib/PrismaClientProvider";
+import db from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function GET(req, {params}) {
     const {id} = await params;
     try{
-        const car = await DB.car.findFirst({
+        const car = await db.car.findFirst({
             where: {
                 id: parseInt(id)
             }

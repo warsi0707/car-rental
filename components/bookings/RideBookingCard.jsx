@@ -12,13 +12,13 @@ function RideBookingCard({ close, id, pricePerDay }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
  
 
 
   const Booking = async (e) => {
     e.preventDefault();
-   
     
     if (session.status === "unauthenticated") {
       return ;
@@ -26,19 +26,22 @@ function RideBookingCard({ close, id, pricePerDay }) {
     const userid = parseInt(session.data.user.id);
     const userId = parseInt(userid)
     try {
-      const res = await fetch(`http://localhost:3000/api/auth/booking/${id}`, {
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/booking/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ startDate, endDate, userId }),
       });
+      setLoading(true)
       const result = await res.json();
       if (res.ok) {
+         setLoading(false)
         toast.success(result.message);
         router.push("/bookings");
         close();
       } else {
+        setLoading(false)
         toast.error(result.message);
       }
     } catch (error) {
@@ -57,6 +60,10 @@ function RideBookingCard({ close, id, pricePerDay }) {
       }
     }
   }, [startDate, endDate, totalPrice]);
+
+  if(loading){
+    return <LoadingPage/>
+  }
   return (
     <div className="pb-10 space-y-5 sm:w-[350px] bg-white rounded-2xl text-black p-2">
       <div className="flex justify-end text-2xl p-2">

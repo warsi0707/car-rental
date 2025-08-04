@@ -1,8 +1,10 @@
-import { DB } from "@/lib/PrismaClientProvider"
 import NextAuth from "next-auth"
 import bcrypt from 'bcrypt'
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import db from "@/lib/PrismaClientProvider";
+
+
 
 
 const AuthOption = NextAuth({
@@ -18,7 +20,7 @@ const AuthOption = NextAuth({
                     if (!credentials.email || !credentials.password) {
                         throw new error("All input required")
                     }
-                    const user = await DB.user.findFirst({
+                    const user = await db.user.findFirst({
                         where: {
                             email: credentials.email
                         }

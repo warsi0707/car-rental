@@ -1,6 +1,6 @@
-import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 import bcrypt  from 'bcrypt'
+import db from "@/lib/PrismaClientProvider";
 
 
 export async function POST(req) {
@@ -11,7 +11,7 @@ export async function POST(req) {
                 error: "All input required"
             }, {status: 404})
         }
-        const existingUser = await DB.user.findFirst({
+        const existingUser = await db.user.findFirst({
             where: {
                 email: email
             }

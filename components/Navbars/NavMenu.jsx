@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React, { memo } from "react";
 import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
