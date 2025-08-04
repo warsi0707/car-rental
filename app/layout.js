@@ -2,8 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
-import Navbars from "@/components/navbars/Navbar";
 import ToasterClient from "@/lib/ToasterClientProvider";
+import Navbar from "@/components/navbars/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <div className=" bg-slate-950">
           <div className=" bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]">
             <AuthProvider>
-              <Navbars />
+              <Navbar />
              <ToasterClient/>
               {children}
               <Footer />
