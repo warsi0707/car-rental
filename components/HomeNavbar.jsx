@@ -5,8 +5,9 @@ import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
 import { useSession } from "next-auth/react";
 import NavLink from "./navbars/NavLink";
-import LogoutBtn from "./navbars/LogoutBtn";
-import NavMenu from "./navbars/NavMenu";
+// import NavLink from "./navbars/NavLink";
+// import LogoutBtn from "./navbars/LogoutBtn";
+// import NavMenu from "./navbars/NavMenu";
 
 export default  function HomeNavbar() {
   const session = useSession();
