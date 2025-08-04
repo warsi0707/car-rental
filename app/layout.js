@@ -3,7 +3,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
 import ToasterClient from "@/lib/ToasterClientProvider";
-import HomeNavbar from "@/components/navbars/HomeNavbar";
+import HomeNavbar from "@/components/navbars/HomeNavbar"
 
 
 
