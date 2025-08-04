@@ -2,10 +2,11 @@
 import React, { memo } from "react";
 import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
-import LogoutBtn from "./LogoutBtn";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import NavMenuButton from "./NavMenuButton";
+import LogoutBtn from "./LogoutBtn";
+
 
 function NavMenu({ close }) {
   const session = useSession();
