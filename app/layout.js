@@ -6,6 +6,7 @@ import ToasterClient from "@/lib/ToasterClientProvider";
 import HomeNavbar from "@/components/navbars/HomeNavbar";
 
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
