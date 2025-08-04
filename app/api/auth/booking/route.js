@@ -1,4 +1,4 @@
-import db from "@/lib/PrismaClientProvider";
+import prisma from "@/lib/PrismaClientProvider";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ export  async function GET(req) {
        const header = await headers()
        const userId = header.get('userId')
     try{
-        const bookings =await db.booking.findMany({
+        const bookings =await prisma.booking.findMany({
             where: {
                 userId: parseInt(userId)
             },

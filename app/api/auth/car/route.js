@@ -1,10 +1,10 @@
-import db from "@/lib/PrismaClientProvider";
+import prisma from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
     const { name, brand, modelYear, pricePerDay, image, content } = await req.json()
     try {
-        const car = await db.car.create({
+        const car = await prisma.car.create({
             data: 
                 {
                     name:name,
