@@ -1,14 +1,18 @@
 "use client";
 import React, { memo } from "react";
 import { signOut } from "next-auth/react";
+import * as motion from "motion/react-client";
 
 function LogoutBtn() {
   return (
-    <div>
-      <button className="cursor-pointer" onClick={signOut}>
+      <motion.button
+   className="hover:text-red-600 cursor-pointer sm:ml-5"
+      whileTap={{ scale: 0.8 }}
+      whileHover={{ scale: 1.3 }}
+      onClick={signOut}>
         Logout
-      </button>
-    </div>
+      </motion.button>
+
   );
 }
 
