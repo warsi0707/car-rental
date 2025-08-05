@@ -14,7 +14,7 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
   const CancelRide = async (id) => {
     try {
       const userId = session.data.user.id;
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/booking/${id}`, {
+      const res = await fetch(`/api/auth/booking/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

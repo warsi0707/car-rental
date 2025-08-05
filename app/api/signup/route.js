@@ -5,7 +5,7 @@ import prisma from "@/lib/PrismaClientProvider";
 
 export async function POST(req) {
     const {name, email, password,adminCode} = await req.json()
-    // try{
+    try{
         if(!name || !email || !password){
             return NextResponse.json({
                 error: "All input required"
@@ -25,7 +25,7 @@ export async function POST(req) {
         }
         const HashPassword = await bcrypt.hash(password,10)
         const isAdmin = adminCode === process.env.Admin_Secret
-        const user = await DB.user.create({
+        const user = await prisma.user.create({
             data: {
                 name,
                 email,
@@ -39,15 +39,15 @@ export async function POST(req) {
                 user: user
             })
         
-    // }catch(error){
-    //     return NextResponse.json({
-    //         error: error
-    //     })
-    // }
+    }catch(error){
+        return NextResponse.json({
+            error: error
+        })
+    }
     
 }
 export async function GET() {
-    const user = await DB.user.findMany({})
+    const user = await prisma.user.findMany({})
     return NextResponse.json({
         user: user
     })

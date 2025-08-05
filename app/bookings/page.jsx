@@ -10,18 +10,18 @@ export default  function Bookings() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const session = useSession()
+
   const GetBookings =async()=>{
-  
     try{
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/booking`,{
+      const response = await fetch(`/api/auth/booking`,{
         method: 'GET',
         headers: {
-          'userId': session.data.user.id
+          'userId': JSON.stringify(session.data.user.id)
         }
       })
-      const result = await res.json()
+      const result = await response.json()
       setLoading(true)
-      if(res.ok){
+      if(response.ok){
         setData(result.bookings)
         setLoading(false)
       }
@@ -32,12 +32,16 @@ export default  function Bookings() {
   }
 
   useEffect(()=>{
-    if(session.status =='authenticated'){
+    setLoading(true)
+    if(session.status ==='authenticated' && session.data.user.id){
+      setLoading(false)
        GetBookings()
-    }
+    }else {
+      return
+    };
    
-  },[])
-  if(loading){
+  },[ session])
+  if(loading ){
     return (
        <LoadingPage/>
     )

@@ -15,7 +15,7 @@ export async function POST(req, { params }) {
         const start = new Date(startDate)
         const last = new Date(endDate)
         const totalDay = (last - start) / (1000 * 60 * 60 * 24)
-        const car = await db.car.findUnique({
+        const car = await prisma.car.findUnique({
             where: {
                 id: parseInt(id)
             }
@@ -67,7 +67,7 @@ export async function PUT(req, { params }) {
     const start = new Date(startDate)
     const end = new Date(endDate)
     const totalDay = (end - start) / (1000 * 60 * 60 * 24)
-    const car = await DB.car.findUnique({
+    const car = await prisma.car.findUnique({
         where: {
             id: parseInt(id)
         }
@@ -81,7 +81,7 @@ export async function PUT(req, { params }) {
     }
     const totalPrice = car.pricePerDay * totalDay
 
-    const update = DB.booking.update({
+    const update = prisma.booking.update({
         where: {
             id: parseInt( id),
             userId: parseInt( userId)
@@ -108,7 +108,7 @@ export async function DELETE(req, {params}) {
     const {id} = await params;
     const {userId} = await req.json()
     try{
-        const RemoveBooking = await DB.booking.delete({
+        const RemoveBooking = await prisma.booking.delete({
             where: {
                 id: parseInt(id),
                 userId: parseInt(userId)

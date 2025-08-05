@@ -38,7 +38,7 @@ export async function POST(req) {
 }
 export async function GET(req) {
     try {
-        const cars = await DB.car.findMany({})
+        const cars = await prisma.car.findMany({})
         if (cars.length == 0) {
             return NextResponse.json({
                 cars: "No data"

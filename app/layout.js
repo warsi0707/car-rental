@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
-import ToasterClient from "@/lib/ToasterClientProvider";
+
 import HomeNavbar from "@/components/HomeNavbar";
 
 
@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
           <div className=" bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]">
             <AuthProvider>
               <HomeNavbar />
-             <ToasterClient/>
+             {/* <ToasterClient/> */}
               {children}
               <Footer />
             </AuthProvider>

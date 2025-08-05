@@ -25,7 +25,7 @@ function Signup() {
     const password = passwordRef.current.value;
 
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/signup`, {
+      const res = await fetch(`/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

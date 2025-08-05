@@ -19,14 +19,11 @@ function RideBookingCard({ close, id, pricePerDay }) {
 
   const Booking = async (e) => {
     e.preventDefault();
-    
-    if (session.status === "unauthenticated") {
-      return ;
-    }
+
     const userid = parseInt(session.data.user.id);
     const userId = parseInt(userid)
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/booking/${id}`, {
+      const response = await fetch(`/api/auth/booking/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,10 +31,10 @@ function RideBookingCard({ close, id, pricePerDay }) {
         body: JSON.stringify({ startDate, endDate, userId }),
       });
       setLoading(true)
-      const result = await res.json();
-      if (res.ok) {
+      const result = await response.json();
+      if (response.ok) {
          setLoading(false)
-        toast.success(result.message);
+        toast.success(result);
         router.push("/bookings");
         close();
       } else {

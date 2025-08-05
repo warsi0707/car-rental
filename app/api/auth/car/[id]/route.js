@@ -22,7 +22,7 @@ export async function PUT(req, {params}) {
     const {name, brand, modelYear, price, image, available} = await req.json() 
     const {id} = await params;
     try{
-        const car = await DB.car.update({
+        const car = await prisma.car.update({
             where: {
                 id: id
             }, data :{
@@ -51,7 +51,7 @@ export async function PUT(req, {params}) {
 export async function DELETE(req, {params}) {
     const {id} = await params;
     try{
-        const car = await DB.car.delete({
+        const car = await prisma.car.delete({
             where: {
                 id: parseInt(id)
             }

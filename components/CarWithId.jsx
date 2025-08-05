@@ -7,7 +7,6 @@ import LoadingPage from "./LoadingPage";
 
 function CarWithId() {
   const { id } = useParams();
-  console.log("id", id);
   const [openCard, setOpenCard] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -15,7 +14,6 @@ function CarWithId() {
   const Car = async () => {
     try {
       const res = await fetch(`/api/car/${id}`);
-      console.log(res);
       const result = await res.json();
       setLoading(true);
       if (res.ok) {
