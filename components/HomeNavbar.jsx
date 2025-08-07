@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
@@ -7,15 +7,18 @@ import { useSession } from "next-auth/react";
 import NavLink from "./NavLink";
 import NavMenu from "./NavMenu";
 import LogoutBtn from "./LogoutBtn";
+import { useRouter } from "next/navigation";
 
 
 export default  function HomeNavbar() {
   const session = useSession();
+  const router = useRouter()
 
   const [openMenu, setOpenMenu] = useState(false);
   const ToggleMenu = () => {
     setOpenMenu(!openMenu);
   };
+  
   return (
     <>
       <div className="flex justify-end  ">

@@ -1,7 +1,4 @@
-"use client";
-
 import CarWithId from "@/components/CarWithId";
-
 
 function page() {
   return (

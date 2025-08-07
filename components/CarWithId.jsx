@@ -4,12 +4,15 @@ import React, { useEffect, useState } from "react";
 import RideBookingCard from "./bookings/RideBookingCard";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import LoadingPage from "./LoadingPage";
+import { useSession } from "next-auth/react";
 
 function CarWithId() {
   const { id } = useParams();
   const [openCard, setOpenCard] = useState(false);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const session = useSession()
+ 
 
   const Car = async () => {
     try {

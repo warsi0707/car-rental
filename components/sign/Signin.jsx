@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import SignFormInput from "./SignFormInput";
 import SignButton from "./SignButton";
 import Link from "next/link";
@@ -26,10 +26,12 @@ function Signin() {
         redirect: true,
         callbackUrl: "/",
       });
+      console.log(res)
       setLoading(true);
-      if (res.ok == true) {
+      if (res.ok === true) {
         setLoading(false);
-        toast.success("Signin success");
+        toast.success(res.status);
+        
       } else {
         toast.error("Signin failed");
       }
@@ -37,6 +39,7 @@ function Signin() {
       toast.error(error);
     }
   };
+
   if(loading){
     return <LoadingPage/>
   }

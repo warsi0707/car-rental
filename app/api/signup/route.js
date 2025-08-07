@@ -30,7 +30,7 @@ export async function POST(req) {
                 name,
                 email,
                 password: HashPassword,
-                isAdmin: isAdmin
+                role: 'admin'
             }
         })
        

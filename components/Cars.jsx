@@ -1,8 +1,11 @@
+import { getServerSession } from "next-auth";
 import CarCard from "./CarCard";
 import GetCars from "@/lib/GetCars";
 
 async function Cars() {
   const cars = await GetCars();
+  const session = await getServerSession()
+ 
   return (
     <div className="min-h-screen w-full bg-white " id="cars">
       <h1 className="text-black text-4xl text-center py-5 w-1/2 mx-auto">
@@ -16,7 +19,7 @@ async function Cars() {
             name={item.name}
             content={item.content}
             price={item.pricePerDay}
-            image={item.image}
+            image={`${item.image}`}
           />
         ))}
       </div>

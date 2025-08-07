@@ -41,7 +41,7 @@ export async function GET(req) {
         const cars = await prisma.car.findMany({})
         if (cars.length == 0) {
             return NextResponse.json({
-                cars: "No data"
+                cars: []
             })
         }
         return NextResponse.json({

@@ -14,6 +14,7 @@ const AuthOption = NextAuth({
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
+            
                 try {
                     if (!credentials.email || !credentials.password) {
                         throw new error("All input required")
@@ -23,6 +24,7 @@ const AuthOption = NextAuth({
                             email: credentials.email
                         }
                     })
+                  
                     if (!user) {
                         return null
                     }
@@ -30,7 +32,12 @@ const AuthOption = NextAuth({
                     if (!comparePassword) {
                         return null
                     }
-                    return user
+                    return {
+                        id : user.id,
+                        name: user.name,
+                        email: user.email,
+                        role : user.role
+                    }
 
 
                 } catch (error) {
@@ -54,28 +61,22 @@ const AuthOption = NextAuth({
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id,
-                    token.name = user.name
+                token.name = user.name
                 token.email = user.email
-                token.isAdmin = user.isAdmin
+                token.role = user.role
             }
             return token
         },
         async session({ session, token }) {
             if (token) {
                 session.user.id = token.id,
+                session.user.role = token.role
                 session.user.email = token.email,
                 session.user.name = token.name
-                session.user.isAdmin = token.isAdmin
+                
             }
             return session
         },
-        // async signIn({account, profile}){
-        //     if(account.provider === 'google'){
-        //          return profile.email_verifird && profile.email.endsWith("@gmail.com")
-                 
-        //     }
-        //     return true
-        // }
     }
 })
 

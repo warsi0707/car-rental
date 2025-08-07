@@ -3,8 +3,9 @@ import Services from "@/components/Services"
 import StarterPage from "@/components/StarterPage"
 
 
-function Dashboard() {
 
+ function Dashboard() {
+  
   return (
     <div>
       <StarterPage />

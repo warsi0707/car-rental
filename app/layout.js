@@ -8,6 +8,7 @@ import HomeNavbar from "@/components/HomeNavbar";
 
 
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,7 +24,8 @@ export const metadata = {
   description: "An app that help you to rent a car",
 };
 
-export default function RootLayout({ children }) {
+export default  function RootLayout({ children }) {
+  
   return (
     <html lang="en">
       <body

@@ -38,12 +38,18 @@ function NavMenu({ close }) {
             <>
               <NavMenuButton link={"/bookings"} title={"Bookings"} />
               <LogoutBtn />
+              
             </>
           )}
           {session.status === "unauthenticated" && (
             <>
               <NavMenuButton link={"/signin"} title={"Signin"} />
               <NavMenuButton link={"/signup"} title={"Signup"} />
+            </>
+          )}
+          {session.data?.user?.role === "admin" && (
+            <>
+               <NavMenuButton link={"/admin/dashboard"} title={"Admin"} />
             </>
           )}
         </div>
