@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
     try{
         const users = await prisma.user.findMany({
+            where: {
+                role: 'user'
+            },
             select:{
                 name: true,
                 email: true,

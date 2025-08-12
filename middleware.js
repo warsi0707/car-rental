@@ -7,7 +7,6 @@ export async function middleware(request) {
   const pathname = request.nextUrl.pathname;
 
   const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
-  console.log("midl token", token)
   if(!token){
   }
   const publicRoutes = ['/signin', '/signup'];

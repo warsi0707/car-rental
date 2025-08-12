@@ -1,10 +1,10 @@
-import AdminDashboard from "@/components/admin/AdminDashboard"
+import AdminHome from "@/components/admin/AdminHome"
 
 
 function page() {
   return (
     <div>
-     <AdminDashboard/>
+     <AdminHome/>
     </div>
   )
 }

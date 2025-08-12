@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
 
 import HomeNavbar from "@/components/HomeNavbar";
+import ContextProvider from "@/context/ContextProvider";
 
 
 
@@ -34,10 +35,12 @@ export default  function RootLayout({ children }) {
         <div className=" bg-slate-950">
           <div className=" bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]">
             <AuthProvider>
+              <ContextProvider>
               <HomeNavbar />
              {/* <ToasterClient/> */}
               {children}
-              <Footer />
+              <Footer />           
+              </ContextProvider>
             </AuthProvider>
           </div>
         </div>
