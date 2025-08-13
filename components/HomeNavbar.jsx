@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
@@ -7,12 +7,11 @@ import { useSession } from "next-auth/react";
 import NavLink from "./NavLink";
 import NavMenu from "./NavMenu";
 import LogoutBtn from "./LogoutBtn";
-import { useRouter } from "next/navigation";
+
 
 
 export default  function HomeNavbar() {
   const session = useSession();
-  const router = useRouter()
 
   const [openMenu, setOpenMenu] = useState(false);
   const ToggleMenu = () => {
@@ -35,6 +34,7 @@ export default  function HomeNavbar() {
               <LogoutBtn /> <NavLink link={"/bookings"} title={"Bookings"} />
             </>
           )}
+          {session?.data?.user?.role === 'admin' && <NavLink link={"/admin/dashboard"} title={"Admin"} />}
           {session.status === "unauthenticated" && (
             <NavLink link={"/signin"} title={"Signin"} />
           )}

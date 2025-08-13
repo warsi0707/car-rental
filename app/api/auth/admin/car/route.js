@@ -3,14 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     const { name, brand, modelYear, pricePerDay, image, content } = await req.json()
-    try {
+    // try {
+        // if( !name || !brand ||  !modelYear || !pricePerDay  || !image || !content ){
+        //     return NextResponse.json({
+        //         error: "All input required"
+        //     })
+        // }
         const car = await prisma.car.create({
             data: 
                 {
                     name:name,
                     brand:brand,
-                    modelYear:modelYear,
-                    pricePerDay: pricePerDay,
+                    modelYear:parseInt(modelYear),
+                    pricePerDay: parseFloat(pricePerDay),
                     image:image,
                     content:content
                 }
@@ -29,11 +34,11 @@ export async function POST(req) {
                 status: 400
             })
         }
-    } catch (error) {
-        return NextResponse.json({
-            error: error
-        })
-    }
+    // } catch (error) {
+    //     return NextResponse.json({
+    //         error: error
+    //     })
+    // }
 
 }
 export async function GET(req) {

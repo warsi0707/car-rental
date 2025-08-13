@@ -33,6 +33,7 @@ function Signup() {
         body: JSON.stringify({ name, email, password }),
       });
       const result = await res.json();
+      console.log(result)
       setLoading(true);
       if (res.ok) {
         setLoading(false);

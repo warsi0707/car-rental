@@ -66,7 +66,7 @@ function Signin() {
           <div className="flex text-black w-96 text-sm justify-between mt-20">
             <p>
               Have'nt an account?{" "}
-              <Link href={"/"} className="underline ">
+              <Link href={"/signup"} className="underline ">
                 Signup
               </Link>
             </p>

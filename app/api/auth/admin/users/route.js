@@ -10,7 +10,8 @@ export async function GET(req) {
             select:{
                 name: true,
                 email: true,
-                role: true
+                role: true,
+                id: true
             }
         })
         return NextResponse.json({

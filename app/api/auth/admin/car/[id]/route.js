@@ -6,7 +6,7 @@ export async function GET(req, {params}) {
     try{
         const car = await prisma.car.findFirst({
             where: {
-                id: id
+                id: parseInt(id)
             }
         })
         return NextResponse.json({
@@ -19,19 +19,19 @@ export async function GET(req, {params}) {
     }
 }
 export async function PUT(req, {params}) {
-    const {name, brand, modelYear, price, image, available} = await req.json() 
+    const {name, brand, modelYear, price, image,content} = await req.json() 
     const {id} = await params;
     try{
         const car = await prisma.car.update({
             where: {
-                id: id
+                id: parseInt(id)
             }, data :{
                 name,
                 brand,
                 modelYear,
                 pricePerDay: price,
                 image,
-                available
+                content
             }
         })
         if(!car){
@@ -50,7 +50,7 @@ export async function PUT(req, {params}) {
 }
 export async function DELETE(req, {params}) {
     const {id} = await params;
-    try{
+    // try{
         const car = await prisma.car.delete({
             where: {
                 id: parseInt(id)
@@ -59,9 +59,9 @@ export async function DELETE(req, {params}) {
         return NextResponse.json({
             message: "Deleted success"
         })
-    }catch(error){
-        return NextResponse.json({
-            error: error
-        })
-    }
+    // }catch(error){
+    //     return NextResponse.json({
+    //         error: error
+    //     })
+    // }
 }
