@@ -13,18 +13,17 @@ function CarWithId() {
   const [data, setData] = useState({});
   const {loading, setLoading} = useContext(StateContext);
 
- 
-
   const Car = async () => {
     try {
       const res = await fetch(`/api/car/${id}`);
       const result = await res.json();
       setLoading(true);
-      if (res.ok) {
+      if (res.ok == true) {
         setLoading(false);
         setData(result.car);
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error)
     }
   };
