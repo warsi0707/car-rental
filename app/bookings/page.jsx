@@ -1,50 +1,47 @@
-'use client'
+"use client";
 import BookedCard from "@/components/bookings/BookedCard";
 import LoadingPage from "@/components/LoadingPage";
+import { StateContext } from "@/context/ContextProvider";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+export default function Bookings() {
+  const [data, setData] = useState([]);
+  const {loading, setLoading} = useContext(StateContext);
+  const session = useSession();
 
-export default  function Bookings() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const session = useSession()
-
-  const GetBookings =async()=>{
-    try{
-      const response = await fetch(`/api/auth/booking`,{
-        method: 'GET',
+  const GetBookings = async () => {
+    try {
+      const response = await fetch(`/api/auth/booking`, {
+        method: "GET",
         headers: {
-          'userId': JSON.stringify(session.data.user.id)
-        }
-      })
-      const result = await response.json()
-      setLoading(true)
-      if(response.ok){
-        setData(result.bookings)
-        setLoading(false)
+          userId: JSON.stringify(session.data.user.id),
+        },
+      });
+      const result = await response.json();
+      setLoading(true);
+      if (response.ok) {
+        setData(result.bookings);
+        setLoading(false);
       }
-    }catch(error){
-      setLoading(false)
-      toast.error(error)
+    } catch (error) {
+      setLoading(false);
+      toast.error(error);
     }
-  }
+  };
 
-  useEffect(()=>{
-    setLoading(true)
-    if(session.status ==='authenticated' && session.data.user.id){
-      setLoading(false)
-       GetBookings()
-    }else {
-      return
-    };
-   
-  },[ session])
-  if(loading ){
-    return (
-       <LoadingPage/>
-    )
+  useEffect(() => {
+    setLoading(true);
+    if (session.status === "authenticated" && session.data.user.id) {
+      setLoading(false);
+      GetBookings();
+    } else {
+      return;
+    }
+  }, [session]);
+  if (loading) {
+    return <LoadingPage />;
   }
   return (
     <div className="min-h-screen w-full flex flex-wrap py-10 gap-10 justify-evenly items-center">

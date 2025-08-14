@@ -3,6 +3,7 @@ import { useCallback, useContext, useState } from "react";
 import AdminUsersCard from "./AdminUsersCard";
 import { StateContext } from "@/context/ContextProvider";
 import LoadingPage from "../LoadingPage";
+import toast from "react-hot-toast";
 
 export default  function AdminUsers() {
   const [data, setData] = useState([])
@@ -12,7 +13,6 @@ export default  function AdminUsers() {
     try{
       const response = await fetch("/api/auth/admin/users")
       const result = await response.json()
-      console.log(result.users)
       setLoading(true)
       if(response.ok ==true){
         setLoading(false)
@@ -20,7 +20,7 @@ export default  function AdminUsers() {
       }
     }catch(error){
       setLoading(false)
-      console.error(error)
+      toast.error(error)
     }
   },[])
   const DeleteUser =async(id)=>{
@@ -30,11 +30,13 @@ export default  function AdminUsers() {
         })
         const result = await response.json()
         if(response.ok){
+          toast.success(result.message)
           GetUser()
+        }else{
+          toast.error(result.error)
         }
-        console.log(result)
       }catch(error){
-        console.error(error)
+       toast.error(result.error)
       }
     }
 

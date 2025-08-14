@@ -37,7 +37,7 @@ export async function PUT(req, {params}) {
         if(!car){
             return NextResponse.json({
                 error: "Updation failed"
-            })
+            },{status:400})
         }
         return NextResponse.json({
             message: "Car data updated"
@@ -45,12 +45,12 @@ export async function PUT(req, {params}) {
     }catch(error){
         return NextResponse.json({
             error: error
-        })
+        },{status: 404})
     }
 }
 export async function DELETE(req, {params}) {
     const {id} = await params;
-    // try{
+    try{
         const car = await prisma.car.delete({
             where: {
                 id: parseInt(id)
@@ -59,9 +59,9 @@ export async function DELETE(req, {params}) {
         return NextResponse.json({
             message: "Deleted success"
         })
-    // }catch(error){
-    //     return NextResponse.json({
-    //         error: error
-    //     })
-    // }
+    }catch(error){
+        return NextResponse.json({
+            error: error
+        },{status:404})
+    }
 }

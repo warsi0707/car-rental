@@ -2,26 +2,30 @@ import { useContext, useEffect, useState } from "react";
 import AdminBookingCard from "./AdminBookingCard";
 import LoadingPage from "../LoadingPage";
 import { StateContext } from "@/context/ContextProvider";
+import toast from "react-hot-toast";
 
 function AdminBookings() {
   const [data, setData] = useState([]);
   const { loading, setLoading } = useContext(StateContext);
 
   const GetBookings = async () => {
-    const response = await fetch("/api/auth/admin/user-bookings");
-    const result = await response.json();
-    setLoading(true);
-    if (response.ok == true) {
-      setData(result.bookings);
-      setLoading(false);
+    try {
+      const response = await fetch("/api/auth/admin/user-bookings");
+      const result = await response.json();
+      setLoading(true);
+      if (response.ok == true) {
+        setData(result.bookings);
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(error);
     }
-    console.log(result.bookings);
   };
 
   useEffect(() => {
     GetBookings();
   }, []);
-  
+
   if (loading) {
     return <LoadingPage />;
   }

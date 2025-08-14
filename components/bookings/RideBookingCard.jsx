@@ -1,18 +1,19 @@
 "use client";
-import { memo, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import BookingInput from "./BookingInput";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import LoadingPage from "../LoadingPage";
+import { StateContext } from "@/context/ContextProvider";
 
 function RideBookingCard({ close, id, pricePerDay }) {
   const session = useSession();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [loading, setLoading] = useState(false)
+  const {loading, setLoading} = useContext(StateContext)
   const router = useRouter();
  
 
@@ -34,12 +35,12 @@ function RideBookingCard({ close, id, pricePerDay }) {
       const result = await response.json();
       if (response.ok) {
          setLoading(false)
-        toast.success(result);
+        toast.success(result.message);
         router.push("/bookings");
         close();
       } else {
         setLoading(false)
-        toast.error(result.message);
+        toast.error(result.error);
       }
     } catch (error) {
       toast.error(error);

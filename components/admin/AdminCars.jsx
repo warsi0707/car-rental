@@ -3,6 +3,7 @@ import AdminCarCard from "./AdminCarCard";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { StateContext } from "@/context/ContextProvider";
 import LoadingPage from "../LoadingPage";
+import toast from "react-hot-toast";
 
 export default function AdminCars() {
   const [data, setData] = useState([]);
@@ -19,10 +20,9 @@ export default function AdminCars() {
       } else {
         setData([]);
       }
-      console.log(result);
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      toast.error(error);
     }
   }, []);
   const DeleteCar = async (id) => {
@@ -32,10 +32,13 @@ export default function AdminCars() {
       });
       const result = await response.json();
       if(response.ok == true){
+        toast.success(result.message)
         GetAllCars()
+      }else{
+        toast.error(result.error)
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

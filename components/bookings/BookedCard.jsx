@@ -1,15 +1,16 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { memo, useState } from "react";
+import React, { memo, useContext } from "react";
 import toast from "react-hot-toast";
 import { MdCurrencyRupee } from "react-icons/md";
 import LoadingPage from "../LoadingPage";
+import { StateContext } from "@/context/ContextProvider";
 
 function BookedCard({ name, brand, price, start, end, total, id }) {
   const session = useSession();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const {loading, setLoading} = useContext(StateContext);
 
   const CancelRide = async (id) => {
     try {
@@ -26,7 +27,7 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
       if (res.ok) {
         setLoading(false);
         toast.success(result.message);
-        router.push("/");
+        router.push("/bookings");
       } else {
         setLoading(false);
         toast.error(result.error);

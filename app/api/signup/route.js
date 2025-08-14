@@ -25,7 +25,6 @@ export async function POST(req) {
         }
         const HashPassword = await bcrypt.hash(password, 10)
         const isAdmin = adminCode === process.env.Admin_Secret
-        console.log(isAdmin)
         if (isAdmin) {
             const user = await prisma.user.create({
                 data: {
@@ -36,9 +35,8 @@ export async function POST(req) {
                 }
             })
             return NextResponse.json({
-            message: "Signup success",
-            user: user
-        })
+                message: "Signup success"
+            })
         } else {
             const user = await prisma.user.create({
                 data: {
@@ -48,23 +46,27 @@ export async function POST(req) {
                 }
             })
             return NextResponse.json({
-            message: "Signup success",
-            user: user
-        })
+                message: "Signup success",
+            })
         }
 
 
     } catch (error) {
         return NextResponse.json({
             error: error
-        })
+        }, { status: 404 })
     }
 
 }
 export async function GET() {
-    const user = await prisma.user.findMany({})
-    return NextResponse.json({
-        user: user
-    })
-
+    try {
+        const user = await prisma.user.findMany({})
+        return NextResponse.json({
+            user: user
+        })
+    } catch (error) {
+        return NextResponse.json({
+            error: error
+        }, { status: 404 })
+    }
 }

@@ -20,7 +20,7 @@ export async function GET(req, {params}) {
     }catch(error){
         return NextResponse.json({
             error: error
-        })
+        },{status:404})
     }
 }
 

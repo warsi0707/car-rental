@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     const { name, brand, modelYear, pricePerDay, image, content } = await req.json()
-    // try {
-        // if( !name || !brand ||  !modelYear || !pricePerDay  || !image || !content ){
-        //     return NextResponse.json({
-        //         error: "All input required"
-        //     })
-        // }
+    try {
+        if( !name || !brand ||  !modelYear || !pricePerDay  || !image || !content ){
+            return NextResponse.json({
+                error: "All input required"
+            },{status:404})
+        }
         const car = await prisma.car.create({
             data: 
                 {
@@ -34,11 +34,11 @@ export async function POST(req) {
                 status: 400
             })
         }
-    // } catch (error) {
-    //     return NextResponse.json({
-    //         error: error
-    //     })
-    // }
+    } catch (error) {
+        return NextResponse.json({
+            error: error
+        },{status:404})
+    }
 
 }
 export async function GET(req) {
@@ -55,6 +55,6 @@ export async function GET(req) {
     } catch (error) {
         return NextResponse.json({
             error: error
-        })
+        },{status:404})
     }
 }

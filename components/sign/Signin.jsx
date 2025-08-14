@@ -1,16 +1,17 @@
 "use client";
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useContext, useRef, } from "react";
 import SignFormInput from "./SignFormInput";
 import SignButton from "./SignButton";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import LoadingPage from "../LoadingPage";
+import { StateContext } from "@/context/ContextProvider";
 
 function Signin() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
-  const [loading, setLoading] = useState(false);
+  const {loading, setLoading} = useContext(StateContext);
 
   const HandleSignin = async (e) => {
     e.preventDefault();
@@ -26,12 +27,10 @@ function Signin() {
         redirect: true,
         callbackUrl: "/",
       });
-      console.log(res)
       setLoading(true);
       if (res.ok === true) {
         setLoading(false);
-        toast.success(res.status);
-        
+        toast.success("Signin success");
       } else {
         toast.error("Signin failed");
       }
@@ -40,8 +39,8 @@ function Signin() {
     }
   };
 
-  if(loading){
-    return <LoadingPage/>
+  if (loading) {
+    return <LoadingPage />;
   }
   return (
     <div className="h-screen w-screen px-10 my-10">

@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useContext, useRef, useState } from "react";
 import SignFormInput from "./SignFormInput";
 import SignOptionButton from "./SignOptionButton";
 import Link from "next/link";
@@ -10,13 +10,14 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import LoadingPage from "../LoadingPage";
 import { signIn } from "next-auth/react";
+import { StateContext } from "@/context/ContextProvider";
 
 function Signup() {
   const nameRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const {loading, setLoading} = useContext(StateContext)
 
   const SignUp = async (e) => {
     e.preventDefault();
@@ -33,9 +34,8 @@ function Signup() {
         body: JSON.stringify({ name, email, password }),
       });
       const result = await res.json();
-      console.log(result)
       setLoading(true);
-      if (res.ok) {
+      if (res.ok ==true) {
         setLoading(false);
         toast.success(result.message);
         router.push("/");

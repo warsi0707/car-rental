@@ -5,6 +5,7 @@ import AdminFormBtn from "./AdminFormBtn";
 import { useContext, useRef } from "react";
 import { StateContext } from "@/context/ContextProvider";
 import LoadingPage from "../LoadingPage";
+import toast from "react-hot-toast";
 
 
 
@@ -38,15 +39,17 @@ export default function UploadCar({ onclick }) {
       const result = await response.json()
       setLoading(true)
       if(response.ok){
+        toast.success(result.message)
         setLoading(false)
         setTimeout(() => {
           onclick(false)
         }, 2000);
-        
+      }else {
+        toast.error(result.error)
       }
     }catch(error){
       setLoading(false)
-      console.error(error)
+      toast.error(error)
     }
   }
 

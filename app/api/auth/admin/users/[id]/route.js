@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(req, { params }) {
     const { id } = await params;
-    console.log(id)
     try {
         const user = await prisma.user.delete({
             where: {
@@ -13,13 +12,12 @@ export async function DELETE(req, { params }) {
         })
         if (user) {
             return NextResponse.json({
-                message: "User deleted",
-                user: user
+                message: "User deleted"
             })
         }
         return NextResponse.json({
             error: "User deletion failed"
-        })
+        },{status:400})
     } catch (error) {
         return NextResponse.json({
             error: error.meta.cause

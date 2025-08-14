@@ -1,17 +1,18 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RideBookingCard from "./bookings/RideBookingCard";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import LoadingPage from "./LoadingPage";
-import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { StateContext } from "@/context/ContextProvider";
 
 function CarWithId() {
   const { id } = useParams();
   const [openCard, setOpenCard] = useState(false);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const session = useSession()
+  const {loading, setLoading} = useContext(StateContext);
+
  
 
   const Car = async () => {
@@ -24,7 +25,7 @@ function CarWithId() {
         setData(result.car);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error)
     }
   };
 

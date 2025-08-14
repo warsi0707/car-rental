@@ -10,7 +10,7 @@ export async function POST(req, { params }) {
         if (!startDate || !endDate) {
             return NextResponse.json({
                 error: "Provide proper start and end date in YYYY-MM-DD formate"
-            })
+            },{status: 400})
         }
         const start = new Date(startDate)
         const last = new Date(endDate)
@@ -33,13 +33,12 @@ export async function POST(req, { params }) {
 
             })
             return NextResponse.json({
-                message: "Your car is book, Enjoy",
-                booking: booking
+                message: "Your car is book, Enjoy"
             })
         } else {
             return NextResponse.json({
                 error: "Booking failed"
-            })
+            },{status: 400})
         }
     } catch (error) {
         return NextResponse.json({
@@ -55,7 +54,7 @@ export async function PUT(req, { params }) {
     if (!startDate || !endDate) {
         return NextResponse.json({
             error: "Change date formate to YYYY-MM-DD"
-        })
+        },{status: 400})
     }
     if(!userId){
         return NextResponse.json({
@@ -92,8 +91,7 @@ export async function PUT(req, { params }) {
         }
     })
     return NextResponse.json({
-        message: "Booking update",
-        booking: update
+        message: "Booking update"
     })
     }catch(error){
         return NextResponse.json({

@@ -5,6 +5,7 @@ import AuthProvider from "@/lib/AuthProvider";
 
 import HomeNavbar from "@/components/HomeNavbar";
 import ContextProvider from "@/context/ContextProvider";
+import ToasterClient from "@/lib/ToasterClientProvider";
 
 
 
@@ -37,7 +38,7 @@ export default  function RootLayout({ children }) {
             <AuthProvider>
               <ContextProvider>
               <HomeNavbar />
-             {/* <ToasterClient/> */}
+             <ToasterClient/>
               {children}
               <Footer />           
               </ContextProvider>
