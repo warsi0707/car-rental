@@ -13,7 +13,7 @@ Users can browse, book, and manage car rentals in real time, while admins can ad
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage](public/screenshots/homePage.png)
+![Homepage](public/screenshots/HomePage.png)
 
 ### Cars
 ![Homepage](public/screenshots/carpage.png)
@@ -61,8 +61,6 @@ Users can browse, book, and manage car rentals in real time, while admins can ad
 ```bash
 git clone https://github.com/warsi0707/car-rental
 
-
-```bash
 npm install
 
 npx prisma migrate dev --name init
