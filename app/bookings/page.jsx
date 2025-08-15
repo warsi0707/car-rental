@@ -11,6 +11,7 @@ export default function Bookings() {
   const {loading, setLoading} = useContext(StateContext);
   const session = useSession();
 
+
   const GetBookings = async () => {
     try {
       const response = await fetch(`/api/auth/booking`, {

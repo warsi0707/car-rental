@@ -7,10 +7,12 @@ import { MdCurrencyRupee } from "react-icons/md";
 import LoadingPage from "../LoadingPage";
 import { StateContext } from "@/context/ContextProvider";
 
+
 function BookedCard({ name, brand, price, start, end, total, id }) {
   const session = useSession();
   const router = useRouter();
   const {loading, setLoading} = useContext(StateContext);
+
 
   const CancelRide = async (id) => {
     try {
@@ -24,7 +26,7 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
       });
       const result = await res.json();
       setLoading(true);
-      if (res.ok) {
+      if (res.ok ==true) {
         setLoading(false);
         toast.success(result.message);
         router.push("/bookings");

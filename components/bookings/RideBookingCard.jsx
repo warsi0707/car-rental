@@ -20,8 +20,10 @@ function RideBookingCard({ close, id, pricePerDay }) {
 
   const Booking = async (e) => {
     e.preventDefault();
-
-    const userid = parseInt(session.data.user.id);
+    if(startDate && endDate < new Date){
+      toast.error("Previous date not allowed")
+    }
+    const userid = parseInt(session?.data?.user?.id);
     const userId = parseInt(userid)
     try {
       const response = await fetch(`/api/auth/booking/${id}`, {
@@ -33,7 +35,8 @@ function RideBookingCard({ close, id, pricePerDay }) {
       });
       setLoading(true)
       const result = await response.json();
-      if (response.ok) {
+     
+      if (response.ok ==true) {
          setLoading(false)
         toast.success(result.message);
         router.push("/bookings");

@@ -7,6 +7,11 @@ export async function POST(req, { params }) {
     const { id } = await params;
     const { startDate, endDate, userId } = await req.json()
     try {
+        if(!userId){
+            return NextResponse.json({
+                error: "Login required"
+            },{status:404})
+        }
         if (!startDate || !endDate) {
             return NextResponse.json({
                 error: "Provide proper start and end date in YYYY-MM-DD formate"
@@ -14,6 +19,11 @@ export async function POST(req, { params }) {
         }
         const start = new Date(startDate)
         const last = new Date(endDate)
+        if(start && last < new Date){
+            return NextResponse.json({
+                error: 'Previous date not allowed'
+            },{status:404})
+        }
         const totalDay = (last - start) / (1000 * 60 * 60 * 24)
         const car = await prisma.car.findUnique({
             where: {
