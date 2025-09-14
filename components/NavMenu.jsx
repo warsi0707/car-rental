@@ -14,7 +14,7 @@ function NavMenu({ close }) {
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ duration: 0.9, ease: "easeInOut" }}
-      className="h-screen w-screen flex justify-end"
+      className="h-screen w-screen flex justify-end z-50"
     >
       <div className="bg-white w-1/2 h-screen fixed top-0 p-5 z-50">
         <motion.button

@@ -18,8 +18,8 @@ export default function HomeNavbar() {
 
   return (
     <>
-      <div className="flex justify-end  ">
-        <motion.div className="bg-black backdrop-blur-3xl fixed top-0 right-0 left-0  p-3 text-white w-96 mx-auto  rounded-full  justify-between px-3 hidden sm:flex mt-5">
+      <div className="flex justify-end  w-full">
+        <motion.div className="bg-black backdrop-blur-3xl fixed top-0 right-0 left-0 z-50 p-3 text-white w-96 mx-auto  rounded-full  justify-between px-3 hidden sm:flex mt-5">
           <NavLink link={"/"} title={"Home"} />
           <NavLink link={"#cars"} title={"Cars"} />
           <NavLink link={"#service"} title={"Services"} />
