@@ -4,11 +4,16 @@ import  { DB } from "@/lib/PrismaClientProvider";
 
 
 export async function POST(req) {
-    const { name, email, password, adminCode } = await req.json()
+    const { name, email, password, confirmPassword ,adminCode } = await req.json()
     // try {
         if (!name || !email || !password) {
             return NextResponse.json({
                 error: "All input required"
+            }, { status: 404 })
+        }
+        if(password !== confirmPassword){
+            return NextResponse.json({
+                error: "Password not match"
             }, { status: 404 })
         }
         const existingUser = await DB.user.findFirst({

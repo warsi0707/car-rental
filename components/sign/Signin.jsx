@@ -7,6 +7,9 @@ import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import LoadingPage from "../LoadingPage";
 import { StateContext } from "@/context/ContextProvider";
+import SignOptionButton from "./SignOptionButton";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 function Signin() {
   const emailRef = useRef("");
@@ -15,6 +18,7 @@ function Signin() {
 
   const HandleSignin = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     try {
@@ -24,24 +28,24 @@ function Signin() {
       const res = await signIn("credentials", {
         email,
         password,
-        redirect: true,
-        callbackUrl: "/",
-      });
-      setLoading(true);
+        // redirect: true,
+        // callbackUrl: "/",
+      })
+       toast.success("Signin success");
+      setLoading(false)
       if (res.ok === true) {
         setLoading(false);
         toast.success("Signin success");
       } else {
+        setLoading(false)
         toast.error("Signin failed");
       }
     } catch (error) {
-      toast.error(error);
+      setLoading(false)
+      toast.error("Something went wrong");
     }
   };
 
-  if (loading) {
-    return <LoadingPage />;
-  }
   return (
     <div className="h-screen w-screen px-10 my-10">
       <div className="bg-indigo-400 flex flex-col-reverse sm:flex-row w-full h-screen sm:pl-10 rounded-2xl">
@@ -60,8 +64,11 @@ function Signin() {
             placeholder={"Password"}
             type={"Password"}
           />
-          <SignButton onclick={HandleSignin} title={"Signin"} />
-
+          <button onClick={HandleSignin} className="bg-yellow-300 cursor-pointer text-black p-2 rounded-full w-80 mt-2">{loading? "Loading...": "SignIn"}</button>
+          <div className="flex  w-full justify-center gap-20">
+            <SignOptionButton onclick={() => signIn("google")} icon={<FcGoogle />}/>
+            <SignOptionButton onclick={() => signIn("github")} icon={<FaGithub />} />
+            </div>
           <div className="flex text-black w-96 text-sm justify-between mt-20">
             <p>
               Have'nt an account?{" "}
@@ -81,7 +88,6 @@ function Signin() {
           />
         </div>
       </div>
-      {loading && <LoadingPage />}
     </div>
   );
 }

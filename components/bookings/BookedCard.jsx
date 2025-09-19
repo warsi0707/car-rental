@@ -1,7 +1,5 @@
-"use client";
 import React, { memo } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
-
 
 function BookedCard({ name, brand, price, start, end, total, onDelete}) {
 

@@ -1,14 +1,10 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
-import * as motion from "motion/react-client";
 import { useSession } from "next-auth/react";
-import NavLink from "./NavLink";
 import NavMenu from "./NavMenu";
-import LogoutBtn from "../LogoutBtn";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function HomeNavbar() {
   const session = useSession();
@@ -55,19 +51,18 @@ export default function HomeNavbar() {
               </Link>
             ))}
         </div>
-        <div className="  text-xl bg-black text-white px-4 py-3 rounded-full ">
           {openMenu && (
-            <button onClick={ToggleMenu} className="cursor-pointer">
+            <button onClick={ToggleMenu} className="bg-black text-white p-4 text-2xl rounded-full cursor-pointer">
               <RxCross1 />
             </button>
           )}
           {!openMenu && (
-            <button onClick={ToggleMenu} className="cursor-pointer">
+            <button onClick={ToggleMenu} className="bg-black text-white p-4 text-2xl rounded-full cursor-pointer">
               <FaBars />
             </button>
           )}
         </div>
-      </div>
+     
 
       {/* <div className="flex justify-end  w-full">
         <motion.div className="bg-black backdrop-blur-3xl fixed top-0 right-0 left-0 z-50 p-3 text-white w-96 mx-auto  rounded-full  justify-between px-3 hidden sm:flex mt-5">

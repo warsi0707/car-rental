@@ -33,13 +33,11 @@ function RideBookingCard({ onClose, id, pricePerDay }) {
     setLoading(true)
     if(formData.startDate && formData.endDate < new Date){
       toast.error("Previous date not allowed")
-     
     }
     const userId = session?.data?.user?.id;
     
     try {
       const response = await axios.post(`/api/auth/booking/${id}`, { ...formData, userId, carId: id })
-      console.log(response)
       if (response.statusText === "OK") {
          setLoading(false)
         toast.success(response.data.message);

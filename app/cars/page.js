@@ -12,8 +12,6 @@ export default async function page() {
             <CarsCard key={item.id} id={item.id} name={item.name} image={item.images[0]} price={item.pricePerDay} />
         ))}
         </div>
-        
-      
     </div>
   )
 }

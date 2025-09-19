@@ -1,6 +1,4 @@
-"use client";
 import BookingsPage from "@/components/pages/BookingsPage";
-
 
 export default function Bookings() {
 
@@ -8,23 +6,5 @@ export default function Bookings() {
     <div>
       <BookingsPage/>
     </div>
-    // <div className="min-h-screen w-full flex flex-wrap py-10 gap-10 justify-evenly items-center">
-    //   {data.map((item) => (
-    //     <BookedCard
-    //       key={item.id}
-    //       id={item.id}
-    //       name={item.car.name}
-    //       model={item.car.modelYear}
-    //       price={item.car.pricePerDay}
-    //       start={item.startDate}
-    //       end={item.endDate}
-    //       total={item.totalCost}
-    //       brand={item.car.brand}
-    //     />
-    //   ))}
-    //   {data.length == 0 && (
-    //     <h1 className="text-5xl font-bold">No Bookings Available</h1>
-    //   )}
-    // </div>
   );
 }

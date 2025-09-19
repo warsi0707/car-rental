@@ -1,29 +1,32 @@
 "use client";
 import React, { memo, useContext, useRef, useState } from "react";
 import SignFormInput from "./SignFormInput";
-import SignOptionButton from "./SignOptionButton";
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
 import SignButton from "./SignButton";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import LoadingPage from "../LoadingPage";
-import { signIn } from "next-auth/react";
 import { StateContext } from "@/context/ContextProvider";
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 function Signup() {
   const nameRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const confirmPassRef = useRef("")
   const router = useRouter();
   const {loading, setLoading} = useContext(StateContext)
+  const [showPassword, setShowPassword] = useState(false)
 
   const SignUp = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const confirmPassword =confirmPassRef.current.value;
+    
 
     try {
       const res = await fetch(`/api/signup`, {
@@ -31,7 +34,7 @@ function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, confirmPassword}),
       });
       const result = await res.json();
       setLoading(true);
@@ -47,9 +50,6 @@ function Signup() {
       toast.error(error);
     }
   };
-  if(loading){
-    return (<LoadingPage/>)
-  }
   return (
     <div className="h-screen w-screen px-10 my-10">
       <div className="bg-indigo-400 flex flex-col-reverse sm:flex-row w-full h-screen sm:pl-10 rounded-2xl">
@@ -67,21 +67,34 @@ function Signup() {
             placeholder={"Johny@gmail.com"}
             type={"Email"}
           />
-          <SignFormInput
-            refs={passwordRef}
-            label={"Password"}
-            placeholder={"Password"}
-            type={"Password"}
-          />
-          <SignButton onclick={SignUp} title={"Signup"} />
-          <div className="flex gap-5 w-80">
-            <SignOptionButton
-              onclick={() => signIn("google")}
-              title={"Google"}
-              icon={<FcGoogle />}
-            />
-            <SignOptionButton title={"Github"} icon={<FaGithub />} />
+          <div className="flex flex-col gap-2 w-80">
+            <label className="text-sm font-thin">Password</label>
+            <div className=" rounded-3xl bg-slate-200 text-black  flex gap-1 justify-between px-4">
+              <input
+                ref={passwordRef}
+                className="w-full p-2 px-0 outline-none"
+                placeholder="Password"
+                type={`${showPassword? "text": "password"}`}
+              />
+              <button onClick={()=> setShowPassword(!showPassword)} className="cursor-pointer">{showPassword? <FaRegEyeSlash/>:<FaRegEye/>}</button>
+            </div>
+            
           </div>
+          <div className="flex flex-col gap-2 w-80">
+            <label className="text-sm font-thin">Password</label>
+            <div className=" rounded-3xl bg-slate-200 text-black  flex gap-1 justify-between px-4">
+              <input
+                ref={confirmPassRef}
+                className="w-full p-2 px-0 outline-none"
+                placeholder="Password"
+               type={`${showPassword? "text": "password"}`}
+              />
+              <button onClick={()=> setShowPassword(!showPassword)} className="cursor-pointer">{showPassword? <FaRegEyeSlash/>:<FaRegEye/>}</button>
+            </div>
+            
+          </div>
+          <button onClick={SignUp} className="bg-yellow-300 cursor-pointer text-black p-2 rounded-full w-80 mt-2">{loading? "Loading...": "Signup"}</button>
+          
           <div className="flex text-black w-96 text-sm justify-between mt-20">
             <p>
               Have an account?{" "}

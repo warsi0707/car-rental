@@ -1,7 +1,6 @@
 import Signin from '@/components/sign/Signin'
-import React from 'react'
 
-function page() {
+export default function page() {
   return (
     <div>
       <Signin/>
@@ -9,4 +8,3 @@ function page() {
   )
 }
 
-export default page
