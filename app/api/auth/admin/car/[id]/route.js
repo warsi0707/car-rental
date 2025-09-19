@@ -1,10 +1,10 @@
-import prisma from "@/lib/PrismaClientProvider";
+import  { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function GET(req, {params}) {
     const {id} = await params;
     try{
-        const car = await prisma.car.findFirst({
+        const car = await DB.car.findFirst({
             where: {
                 id: parseInt(id)
             }
@@ -22,7 +22,7 @@ export async function PUT(req, {params}) {
     const {name, brand, modelYear, price, image,content} = await req.json() 
     const {id} = await params;
     try{
-        const car = await prisma.car.update({
+        const car = await DB.car.update({
             where: {
                 id: parseInt(id)
             }, data :{
@@ -51,7 +51,7 @@ export async function PUT(req, {params}) {
 export async function DELETE(req, {params}) {
     const {id} = await params;
     try{
-        const car = await prisma.car.delete({
+        const car = await DB.car.delete({
             where: {
                 id: parseInt(id)
             }

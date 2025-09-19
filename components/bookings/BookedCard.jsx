@@ -1,46 +1,10 @@
 "use client";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { memo, useContext } from "react";
-import toast from "react-hot-toast";
+import React, { memo } from "react";
 import { MdCurrencyRupee } from "react-icons/md";
-import LoadingPage from "../LoadingPage";
-import { StateContext } from "@/context/ContextProvider";
 
 
-function BookedCard({ name, brand, price, start, end, total, id }) {
-  const session = useSession();
-  const router = useRouter();
-  const {loading, setLoading} = useContext(StateContext);
+function BookedCard({ name, brand, price, start, end, total, onDelete}) {
 
-
-  const CancelRide = async (id) => {
-    try {
-      const userId = session.data.user.id;
-      const res = await fetch(`/api/auth/booking/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
-      const result = await res.json();
-      setLoading(true);
-      if (res.ok ==true) {
-        setLoading(false);
-        toast.success(result.message);
-        router.push("/bookings");
-      } else {
-        setLoading(false);
-        toast.error(result.error);
-      }
-    } catch (error) {
-      toast.error(error);
-    }
-  };
-  if(loading){
-    return <LoadingPage/>
-  }
   return (
     <div className="w-96 py-5 flex flex-col gap-5 rounded-xl p-3 bg-white text-black">
       <div className="flex justify-between">
@@ -53,7 +17,7 @@ function BookedCard({ name, brand, price, start, end, total, id }) {
         </div>
         <div>
           <button
-            onClick={() => CancelRide(id)}
+            onClick={onDelete}
             className="cursor-pointer hover:underline hover:text-red-700"
           >
             Cancel ride

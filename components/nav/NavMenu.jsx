@@ -4,7 +4,8 @@ import { RxCross1 } from "react-icons/rx";
 import * as motion from "motion/react-client";
 import { useSession } from "next-auth/react";
 import NavMenuButton from "./NavMenuButton";
-import LogoutBtn from "./LogoutBtn";
+import LogoutBtn from "../LogoutBtn";
+
 
 function NavMenu({ close }) {
   const session = useSession();
@@ -14,7 +15,7 @@ function NavMenu({ close }) {
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ duration: 0.9, ease: "easeInOut" }}
-      className="h-screen w-screen flex justify-end z-50"
+      className="h-screen w-screen flex justify-end z-50 "
     >
       <div className="bg-white w-1/2 h-screen fixed top-0 p-5 z-50">
         <motion.button
@@ -26,7 +27,7 @@ function NavMenu({ close }) {
         >
           <RxCross1 />
         </motion.button>
-        <div className="text-black mt-20 text-2xl sm:text-5xl flex flex-col items-start gap-8 font-semibold sm:ml-5">
+        <div className="text-black mt-20 text-2xl sm:text-5xl flex flex-col items-start gap-8 font-semibold sm:ml-5 pt-14">
           <h1>Rent your car</h1>
           <NavMenuButton link={"/"} title={"Home"} />
           <NavMenuButton link={"#cars"} title={"Cars"} />

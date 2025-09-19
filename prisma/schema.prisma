@@ -15,34 +15,47 @@ datasource db {
 }
 
 model User {
-  id                             Int @id @default(autoincrement())
+  id                             String @id @default(cuid())
   name                           String
   email                          String
   password                       String
   // isAdmin                        Boolean @default(false)
-  role                           String @default("user") // USER or ADMIN
+  role                           String @default("USER") // USER or ADMIN
   bookings                       Booking[]
+  cars                           Car[]
 }
 
+
 model Car {
-  id                            Int @id @default(autoincrement())
+  id                            String @id @default(cuid())
   name                          String
   content                       String
   brand                         String
   modelYear                     Int
   pricePerDay                   Float
-  image                         String
+  images                        String[]
+  properties                    String[]
   available                     Boolean @default(true)
   bookings                      Booking[]
+
+  ownerId                       String
+  owner                         User @relation(fields: [ownerId], references: [id])
 }
 
 model Booking {
-  id                           Int @id @default(autoincrement())
+  id                           String @id @default(cuid())
 
-  userId                       Int
+  userId                       String
   user                         User @relation(fields: [userId], references: [id])
 
-  carId                        Int
+  name                        String
+  email                       String
+  phone                       String
+  address                     String
+  peopleCount                 Int
+  message                    String?
+
+  carId                        String
   car                          Car @relation(fields: [carId], references: [id])
 
   startDate                    DateTime

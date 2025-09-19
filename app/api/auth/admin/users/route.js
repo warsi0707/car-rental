@@ -1,9 +1,9 @@
-import prisma from "@/lib/PrismaClientProvider";
+import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
     try{
-        const users = await prisma.user.findMany({
+        const users = await DB.user.findMany({
             where: {
                 role: 'user'
             },

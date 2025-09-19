@@ -1,9 +1,9 @@
-import prisma from "@/lib/PrismaClientProvider";
+import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
     try{
-        const bookings = await prisma.booking.findMany({
+        const bookings = await DB.booking.findMany({
             include: {
                 user: {
                     select: {

@@ -1,17 +1,8 @@
 import React, { memo } from "react";
 
-function BookingInput({ value, onchange }) {
+function BookingInput({ value, onChange, placeholder, type}) {
   return (
-    <div className="flex flex-col gap-3">
-      <label>Start Date</label>
-      <input
-        value={value}
-        onChange={onchange}
-        className="border w-full p-3 rounded-xl"
-        type="date"
-        placeholder="date"
-      />
-    </div>
+     <input type={type} value={value} onChange={onChange} className="w-full border-b border-gray-100 p-3 md:p-5 text-sm outline-none" placeholder={placeholder} />
   );
 }
 

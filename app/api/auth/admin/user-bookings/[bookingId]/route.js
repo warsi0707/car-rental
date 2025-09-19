@@ -1,16 +1,16 @@
-import prisma from "@/lib/PrismaClientProvider";
+import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 export async function DELETE(req, { params }) {
     const { bookingId } = await params;
     try {
-        const findBooking = await prisma.booking.findFirst({
+        const findBooking = await DB.booking.findFirst({
             where: {
                 id: parseInt(bookingId)
             }
         })
         if (findBooking) {
-            await prisma.booking.delete({
+            await DB.booking.delete({
                 where: {
                     id: parseInt(bookingId)
                 }

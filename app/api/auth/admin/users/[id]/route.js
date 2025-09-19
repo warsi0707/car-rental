@@ -1,11 +1,11 @@
-import prisma from "@/lib/PrismaClientProvider";
+import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 
 export async function DELETE(req, { params }) {
     const { id } = await params;
     try {
-        const user = await prisma.user.delete({
+        const user = await DB.user.delete({
             where: {
                 id: parseInt(id)
             }

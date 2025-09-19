@@ -3,7 +3,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/lib/AuthProvider";
 
-import HomeNavbar from "@/components/HomeNavbar";
+import HomeNavbar from "@/components/nav/HomeNavbar";
 import ContextProvider from "@/context/ContextProvider";
 import ToasterClient from "@/lib/ToasterClientProvider";
 
@@ -33,8 +33,6 @@ export default  function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className=" bg-slate-950">
-          <div className=" bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]">
             <AuthProvider>
               <ContextProvider>
               <HomeNavbar />
@@ -43,8 +41,6 @@ export default  function RootLayout({ children }) {
               <Footer />           
               </ContextProvider>
             </AuthProvider>
-          </div>
-        </div>
       </body>
     </html>
   );

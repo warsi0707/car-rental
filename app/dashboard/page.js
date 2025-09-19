@@ -1,18 +1,10 @@
-import Cars from "@/components/Cars"
-import Services from "@/components/Services"
-import StarterPage from "@/components/StarterPage"
+import Dashboard from "@/components/pages/Dashboard";
 
 
-
- function Dashboard() {
-  
+export default function page() {
   return (
     <div>
-      <StarterPage />
-      <Cars />
-      <Services />
+      <Dashboard />
     </div>
   )
 }
-
-export default Dashboard

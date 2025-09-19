@@ -7,7 +7,7 @@ function StarterPage() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 1.2 }}
-      className="min-h-screen w-full flex flex-col justify-center items-center text-2xl text-center sm:text-6xl gap-8 mt-10"
+      className="min-h-screen w-full flex flex-col justify-center items-center text-2xl text-center sm:text-6xl gap-8 pb-32 bg-black text-white"
     >
       <h1>From Key to the road </h1>
       <h1>

@@ -1,10 +1,10 @@
-import prisma from "@/lib/PrismaClientProvider";
+import  { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 
 export async function  GET(req) {
     try{
-        const cars = await prisma.car.findMany({})
+        const cars = await DB.car.findMany({})
         if(cars.length == 0){
             return NextResponse.json({
                 cars: []

@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
-import prisma from "@/lib/PrismaClientProvider";
+import  { DB } from "@/lib/PrismaClientProvider";
 
 
 export async function POST(req) {
     const { name, email, password, adminCode } = await req.json()
-    try {
+    // try {
         if (!name || !email || !password) {
             return NextResponse.json({
                 error: "All input required"
             }, { status: 404 })
         }
-        const existingUser = await prisma.user.findFirst({
+        const existingUser = await DB.user.findFirst({
             where: {
                 email: email
             }
@@ -26,7 +26,7 @@ export async function POST(req) {
         const HashPassword = await bcrypt.hash(password, 10)
         const isAdmin = adminCode === process.env.Admin_Secret
         if (isAdmin) {
-            const user = await prisma.user.create({
+            const user = await DB.user.create({
                 data: {
                     name,
                     email,
@@ -38,7 +38,7 @@ export async function POST(req) {
                 message: "Signup success"
             })
         } else {
-            const user = await prisma.user.create({
+            const user = await DB.user.create({
                 data: {
                     name,
                     email,
@@ -51,16 +51,16 @@ export async function POST(req) {
         }
 
 
-    } catch (error) {
-        return NextResponse.json({
-            error: error
-        }, { status: 404 })
-    }
+    // } catch (error) {
+    //     return NextResponse.json({
+    //         error: error
+    //     }, { status: 404 })
+    // }
 
 }
 export async function GET() {
     try {
-        const user = await prisma.user.findMany({})
+        const user = await DB.user.findMany({})
         return NextResponse.json({
             user: user
         })

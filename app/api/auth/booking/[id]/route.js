@@ -1,12 +1,18 @@
-import prisma from "@/lib/PrismaClientProvider";
+
+import { DB } from "@/lib/PrismaClientProvider";
 import { NextResponse } from "next/server";
 
 
 //book a car
 export async function POST(req, { params }) {
     const { id } = await params;
-    const { startDate, endDate, userId } = await req.json()
-    try {
+    const { startDate, endDate, userId, name, email, phone, address, peopleCount, message} = await req.json()
+    if(!name || !email || !phone || !address || !peopleCount){
+        return NextResponse.json({
+            error: "All fields are required"
+        },{status: 400})
+    }
+    // try {
         if(!userId){
             return NextResponse.json({
                 error: "Login required"
@@ -25,22 +31,33 @@ export async function POST(req, { params }) {
             },{status:404})
         }
         const totalDay = (last - start) / (1000 * 60 * 60 * 24)
-        const car = await prisma.car.findUnique({
+        const car = await DB.car.findUnique({
             where: {
-                id: parseInt(id)
+                id: id
             }
         })
+        if(!car){
+            return NextResponse.json({
+                error: "Car not found"
+            },{status: 404})
+        }
+       
         const totalPrice = car.pricePerDay * totalDay
         if (car) {
-            const booking = await prisma.booking.create({
+            const booking = await DB.booking.create({
                 data: {
-                    userId: parseInt(userId),
-                    carId: parseInt(id),
+                    userId: userId,
+                    carId: id,
                     startDate: start,
                     endDate: last,
-                    totalCost: totalPrice
+                    totalCost: totalPrice,
+                    name,
+                    email,
+                    phone,
+                    address,
+                    peopleCount: parseInt(peopleCount),
+                    message
                 }
-
             })
             return NextResponse.json({
                 message: "Your car is book, Enjoy"
@@ -50,11 +67,11 @@ export async function POST(req, { params }) {
                 error: "Booking failed"
             },{status: 400})
         }
-    } catch (error) {
-        return NextResponse.json({
-            error: error
-        })
-    }
+    // } catch (error) {
+    //     return NextResponse.json({
+    //         error: error
+    //     })
+    // }
 }
 //update your bookings
 export async function PUT(req, { params }) {
@@ -76,7 +93,7 @@ export async function PUT(req, { params }) {
     const start = new Date(startDate)
     const end = new Date(endDate)
     const totalDay = (end - start) / (1000 * 60 * 60 * 24)
-    const car = await prisma.car.findUnique({
+    const car = await DB.car.findUnique({
         where: {
             id: parseInt(id)
         }
@@ -90,7 +107,7 @@ export async function PUT(req, { params }) {
     }
     const totalPrice = car.pricePerDay * totalDay
 
-    const update = prisma.booking.update({
+    const update = DB.booking.update({
         where: {
             id: parseInt( id),
             userId: parseInt( userId)
@@ -116,10 +133,10 @@ export async function DELETE(req, {params}) {
     const {id} = await params;
     const {userId} = await req.json()
     try{
-        const RemoveBooking = await prisma.booking.delete({
+        const RemoveBooking = await DB.booking.delete({
             where: {
-                id: parseInt(id),
-                userId: parseInt(userId)
+                id: id,
+                userId: userId
             }
         })
         if(RemoveBooking){

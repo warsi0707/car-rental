@@ -1,4 +1,4 @@
-import prisma from "@/lib/PrismaClientProvider";
+import { DB } from "@/lib/PrismaClientProvider";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -6,9 +6,9 @@ export  async function GET(req) {
        const header = await headers()
        const userId = header.get('userId')
     try{
-        const bookings =await prisma.booking.findMany({
+        const bookings =await DB.booking.findMany({
             where: {
-                userId: parseInt(userId)
+                userId: JSON.parse(userId)
             },
             include: {
                 user: {

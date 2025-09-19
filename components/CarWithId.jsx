@@ -1,85 +1,93 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RideBookingCard from "./bookings/RideBookingCard";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import LoadingPage from "./LoadingPage";
 import toast from "react-hot-toast";
-import { StateContext } from "@/context/ContextProvider";
+import axios from "axios";
 
-function CarWithId() {
+
+export default function CarWithId() {
   const { id } = useParams();
-  const [openCard, setOpenCard] = useState(false);
-  const [data, setData] = useState({});
-  const {loading, setLoading} = useContext(StateContext);
+  const [isBooking, setIsbooking] = useState(false);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const Car = async () => {
     try {
-      const res = await fetch(`/api/car/${id}`);
-      const result = await res.json();
+      const response = await axios.get(`/api/car/${id}`)
       setLoading(true);
-      if (res.ok == true) {
+      if (response.data.car) {
         setLoading(false);
-        setData(result.car);
+        setData(response.data.car);
       }
     } catch (error) {
       setLoading(false);
-      toast.error(error)
+      toast.error(error);
     }
   };
+  const handleBookignMenu =()=>{
+    setIsbooking(!isBooking)
+  }
 
   useEffect(() => {
+    setLoading(true)
     if (id) {
+      setLoading(false)
       Car();
     } else {
       return;
     }
   }, [id]);
 
-  if (loading) {
+  if (loading==true && !data) {
     return <LoadingPage />;
-  }
+  }else{
   return (
-    <div className="min-h-screen w-screen  py-10">
-      <div className="h-screen w-full  p-10 ">
-        <img
-          className="h-96 w-full sm:w-1/2 mx-auto rounded-2xl"
-          src={data.image}
-        />
-        <div className="flex justify-between mt-5 w-full sm:w-1/2 mx-auto h-full px-7 sm:px-0 pt-7">
-          <div className=" fle flex-col space-y-5">
-            <h1 className="text-3xl">{data.name}</h1>
-            <div>
-              <h1>Brand: {data.brand}</h1>
-              <h1>Model Year: {data.modelYear}</h1>
-            </div>
-            <h1>{data.content}</h1>
-            <button
-              onClick={() => setOpenCard(!openCard)}
-              className="bg-red-400 sm:text-3xl py-2 px-5 sm:px-14 rounded-full cursor-pointer hover:bg-red-700 transition-all duration-300"
-            >
-              Book Your Car
-            </button>
-          </div>
-          <div className="flex">
-            <h1 className="mt-1">
-              <LiaRupeeSignSolid />
-            </h1>
-            <h1>{data.pricePerDay} /Day</h1>
-          </div>
+    <>
+    <div className="w-full min-h-screen p-10  gap-10 justify-between flex flex-col lg:grid grid-cols-5 ">
+      <div className="h-full w-full col-span-3 space-y-5">
+        <img src={data?.images[0]} alt="" className="rounded-4xl h-96 w-full" />
+        <div className="flex flex-col flex-wrap justify-center items-center gap-5 w-full lg:flex-row lg:justify-between overflow-hidden">
+          {data?.images.slice(1).map((item)=>(
+            <img
+            key={item}
+            src={item}
+            className="h-52 w-full lg:w-72 rounded-2xl"
+            alt=""
+          />
+          ))}
         </div>
       </div>
-      {openCard && (
-        <div className="absolute bottom-5 right-0">
-          <RideBookingCard
-            close={() => setOpenCard(!openCard)}
-            id={data.id}
-            pricePerDay={data.pricePerDay}
-          />
+      <div className="h-full w-full lg:px-20 col-span-2 flex gap-5 flex-col  justify-between ">
+        <h1 className="text-4xl text-black-100 font-bold ">
+          {data?.name}
+        </h1>
+        <p className="text-gray-100 text-lg border-b pb-10 border-slate-50">{data?.content}</p>
+        <div className="grid grid-cols-2 justify-between gap-5 border-b border-slate-50 pb-5 font-semibold text-gray-100">
+          {data?.properties.map((item)=>(
+            <p key={item}>{item}</p>
+          ))}
         </div>
-      )}
+        <div className=" flex text-center items-center gap-2 border-b pb-10 border-slate-50">
+          <p className="flex items-center text-4xl text-black-100 font-bold">
+            <LiaRupeeSignSolid />
+            {data?.pricePerDay.toLocaleString('en-IN')}
+          </p>
+          <p className="text-xl text-gray-100">/ Per day</p>
+        </div>
+        <button onClick={()=> handleBookignMenu()} className="bg-orange-100 p-5 px-8 rounded-full cursor-pointer">
+          BOOK THE CAR
+        </button>
+      </div>
     </div>
-  );
+    {isBooking &&
+    <RideBookingCard onClose={()=> handleBookignMenu()} pricePerDay={data?.pricePerDay} id={id}/>
+    }
+    </>
+ 
+  );}
 }
 
-export default CarWithId;
+
