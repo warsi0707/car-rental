@@ -7,12 +7,12 @@ import { NextResponse } from "next/server";
 export async function POST(req, { params }) {
     const { id } = await params;
     const { startDate, endDate, userId, name, email, phone, address, peopleCount, message} = await req.json()
-    if(!name || !email || !phone || !address || !peopleCount){
+    if(!name || !email || !phone || !address || !peopleCount || !startDate || !endDate){
         return NextResponse.json({
             error: "All fields are required"
         },{status: 400})
     }
-    // try {
+    try {
         if(!userId){
             return NextResponse.json({
                 error: "Login required"
@@ -67,11 +67,11 @@ export async function POST(req, { params }) {
                 error: "Booking failed"
             },{status: 400})
         }
-    // } catch (error) {
-    //     return NextResponse.json({
-    //         error: error
-    //     })
-    // }
+    } catch (error) {
+        return NextResponse.json({
+            error: error.message
+        },{status: 400})
+    }
 }
 //update your bookings
 export async function PUT(req, { params }) {

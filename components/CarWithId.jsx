@@ -15,9 +15,10 @@ export default function CarWithId() {
   const [loading, setLoading] = useState(true);
 
   const Car = async () => {
+    setLoading(true)
     try {
       const response = await axios.get(`/api/car/${id}`)
-      setLoading(true);
+      
       if (response.data.car) {
         setLoading(false);
         setData(response.data.car);
@@ -49,7 +50,7 @@ export default function CarWithId() {
     <div className="w-full min-h-screen p-10  gap-10 justify-between flex flex-col lg:grid grid-cols-5 ">
       <div className="h-full w-full col-span-3 space-y-5">
         <img src={data?.images[0]} alt="" className="rounded-4xl h-96 w-full" />
-        <div className="flex flex-col flex-wrap justify-center items-center gap-5 w-full lg:flex-row lg:justify-between overflow-hidden">
+        <div className="flex flex-col w-full flex-wrap md:flex-nowrap justify-center items-center gap-2 md:flex-row lg:justify-between overflow-hidden">
           {data?.images.slice(1).map((item)=>(
             <img
             key={item}
