@@ -5,6 +5,8 @@ import { RxCross1 } from "react-icons/rx";
 import { useSession } from "next-auth/react";
 import NavMenu from "./NavMenu";
 import Link from "next/link";
+import { FaCarOn } from "react-icons/fa6";
+
 
 export default function HomeNavbar() {
   const session = useSession();
@@ -28,6 +30,8 @@ export default function HomeNavbar() {
       window.removeEventListener('scroll', handleScroll)
     }
   },[])
+  // 360
+  // EPIC no: NTV3962164
   const navItem = [
     { id: "about", name: "About" },
     { id: "service", name: "Service" },
@@ -38,7 +42,7 @@ export default function HomeNavbar() {
   return (
     <>
       <div className={`${isScroll === true? "bg-white text-black sticky top-0 z-50 shadow-md": "bg-transparent "} w-full p-7 text-xl  flex justify-between items-center border-b border-gray-700`}>
-        <Link href={"/"}>Care Rent</Link>
+        <Link href={"/"} className="flex gap-2"><FaCarOn/> <p>Care Rent</p></Link>
         <div className="hidden lg:flex gap-5 items-center">
           {navItem &&
             navItem.map((item) => (

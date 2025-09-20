@@ -1,5 +1,5 @@
-import { DB } from "@/lib/PrismaClientProvider";
-import { NextResponse } from "next/server";
+import { DB } from "@/lib/PrismaClientProvider"
+import { NextResponse } from "next/server"
 
 export async function GET(req) {
     try{

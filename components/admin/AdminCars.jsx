@@ -10,14 +10,16 @@ export default function AdminCars() {
   const { loading, setLoading } = useContext(StateContext);
 
   const GetAllCars = useCallback(async () => {
+    setLoading(true)
     try {
-      const response = await fetch("/api/auth/admin/car");
+      const response = await fetch("/api/admin/cars");
       const result = await response.json();
       setLoading(true);
       if (response.ok == true) {
         setLoading(false);
         setData(result.cars);
       } else {
+        setLoading(false);
         setData([]);
       }
     } catch (error) {
@@ -27,7 +29,7 @@ export default function AdminCars() {
   }, []);
   const DeleteCar = async (id) => {
     try {
-      const response = await fetch(`/api/auth/admin/car/${id}`, {
+      const response = await fetch(`/api/admin/cars/${id}`, {
         method: "DELETE",
       });
       const result = await response.json();
@@ -58,7 +60,7 @@ export default function AdminCars() {
           name={item.name}
           brand={item.brand}
           content={item.content}
-          image={item.image}
+          image={item.images[0]}
         />
       ))}
     </div>

@@ -9,17 +9,21 @@ import toast from "react-hot-toast";
 export default function UpdateCar() {
   const { loading, setLoading } = useContext(StateContext);
   const { id } = useParams();
+
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
-  const [modelYear, setModelYear] = useState("");
-  const [pricePerDay, setPricePerDay] = useState("");
-  const [image, setImage] = useState("");
+  const [modelYear, setModelYear] = useState(0);
+  const [pricePerDay, setPricePerDay] = useState(0);
   const [content, setContent] = useState("");
+  const [imageInput, setImageInput] = useState("");
+  const [propInput, setPropInput] = useState("");
+
   const router = useRouter();
 
   const GetCar = useCallback(async () => {
+    setLoading(true)
     try {
-      const response = await fetch(`/api/auth/admin/car/${id}`, {
+      const response = await fetch(`/api/admin/cars/${id}`, {
         method: "GET",
       });
       const result = await response.json();
@@ -30,8 +34,9 @@ export default function UpdateCar() {
         setBrand(result.car.brand);
         setModelYear(result.car.modelYear);
         setPricePerDay(result.car.pricePerDay);
-        setImage(result.car.image);
+        setImageInput(result.car.images);
         setContent(result.car.content);
+        setPropInput(result.car.properties)
       }
     } catch (error) {
       toast.error(error);
@@ -41,7 +46,7 @@ export default function UpdateCar() {
   const UpdateCar = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/auth/admin/car/${id}`, {
+      const response = await fetch(`/api/admin/cars/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -51,8 +56,9 @@ export default function UpdateCar() {
           brand,
           modelYear,
           pricePerDay,
-          image,
+          images:imageInput,
           content,
+          properties: propInput
         }),
       });
       const result = await response.json();
@@ -125,9 +131,18 @@ export default function UpdateCar() {
           <div className="flex flex-col gap-1">
             <label className="md:text-xl text-gray-500">Image Link</label>
             <input
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              value={imageInput}
+              onChange={(e) => setImageInput(e.target.value)}
               placeholder="Image..."
+              className="border-2 p-1 md:p-2 rounded-xl bg-slate-100"
+            />
+          </div>
+           <div className="flex flex-col gap-1">
+            <label className="md:text-xl text-gray-500">Properties</label>
+            <input
+              value={propInput}
+              onChange={(e) => setPropInput(e.target.value)}
+              placeholder="Propeties"
               className="border-2 p-1 md:p-2 rounded-xl bg-slate-100"
             />
           </div>
@@ -143,7 +158,7 @@ export default function UpdateCar() {
             ></textarea>
           </div>
           <div>
-            <AdminFormBtn title={"Post"} onclick={UpdateCar} />
+            <button onClick={UpdateCar} className="bg-blue-500 w-full text-xl p-2 rounded-2xl text-white cursor-pointer">{loading? "Loading...": "Make changes"}</button>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ function RideBookingCard({ onClose, id, pricePerDay }) {
     const userId = session?.data?.user?.id;
     
     try {
-      const response = await axios.post(`/api/auth/booking/${id}`, { ...formData, userId, carId: id })
+      const response = await axios.post(`/api/booking/${id}`, { ...formData, userId, carId: id })
       if (response.statusText === "OK") {
          setLoading(false)
         toast.success(response.data.message);

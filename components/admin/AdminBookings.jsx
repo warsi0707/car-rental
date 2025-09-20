@@ -1,23 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import AdminBookingCard from "./AdminBookingCard";
-import LoadingPage from "../LoadingPage";
 import { StateContext } from "@/context/ContextProvider";
 import toast from "react-hot-toast";
 
-function AdminBookings() {
+export default function AdminBookings() {
   const [data, setData] = useState([]);
   const { loading, setLoading } = useContext(StateContext);
 
   const GetBookings = async () => {
+    setLoading(true)
     try {
-      const response = await fetch("/api/auth/admin/user-bookings");
+      const response = await fetch("/api/admin/user-bookings");
       const result = await response.json();
-      setLoading(true);
       if (response.ok == true) {
         setData(result.bookings);
         setLoading(false);
       }
     } catch (error) {
+      setLoading(false)
       toast.error(error);
     }
   };
@@ -26,11 +26,15 @@ function AdminBookings() {
     GetBookings();
   }, []);
 
-  if (loading) {
-    return <LoadingPage />;
+  if (loading && loading) {
+    return (
+      <div>
+        <h1 className="text-4xl font-bold text-center mt-32">Loading...</h1>
+      </div>
+    )
   }
   return (
-    <div className="bg-gray-200  min-h-screen rounded-3xl text-black p-8 flex flex-wrap gap-5 justify-center">
+    <div className=" min-h-screen rounded-3xl text-black p-8 flex flex-wrap gap-5 justify-center">
       {data.map((item) => (
         <AdminBookingCard
           key={item.id}
@@ -39,10 +43,11 @@ function AdminBookings() {
           username={item.user.name}
           price={item.totalCost}
           modelYear={item.car.modelYear}
+          image = {item.car.images[0]}
         />
       ))}
     </div>
   );
 }
 
-export default AdminBookings;
+

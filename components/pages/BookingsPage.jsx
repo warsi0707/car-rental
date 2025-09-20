@@ -16,7 +16,7 @@ export default  function BookingsPage() {
 
   const GetBookings = async () => {
     try {
-     const response = await fetch(`/api/auth/booking`, {
+     const response = await fetch(`/api/booking`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export default  function BookingsPage() {
   const CancelRide =useCallback( async (id) => {
     try {
       const userId = session.data.user.id;
-      const res = await fetch(`/api/auth/booking/${id}`, {
+      const res = await fetch(`/api/booking/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
