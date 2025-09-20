@@ -24,8 +24,6 @@ function RideBookingCard({ onClose, id, pricePerDay }) {
 
   const {loading, setLoading} = useContext(StateContext)
   const router = useRouter();
- 
-
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -37,7 +35,7 @@ function RideBookingCard({ onClose, id, pricePerDay }) {
     const userId = session?.data?.user?.id;
     
     try {
-      const response = await axios.post(`/api/booking/${id}`, { ...formData, userId, carId: id })
+      const response = await axios.post(`/api/booking/${id}`, { ...formData, userId })
       console.log(response)
       if (response.statusText === "OK") {
          setLoading(false)
